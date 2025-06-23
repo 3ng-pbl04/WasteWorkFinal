@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Volunteer;
+use Illuminate\Support\Facades\Storage;
+
 
 class VolunteerController extends Controller
 {
@@ -28,7 +30,7 @@ class VolunteerController extends Controller
             $validatedData['foto'] = 'foto_volunteer/' . $fotoName;
         }
 
-        volunteer::create($validatedData);
+        Volunteer::create($validatedData);
 
         // Arahkan kembali ke halaman utama
         return redirect('/')->with('success', 'volunteer berhasil dikirim!');
