@@ -18,7 +18,7 @@ class HasilOlahResource extends Resource
     protected static ?string $model = HasilOlah::class;
     protected static ?string $navigationGroup = 'Manajemen';
     protected static ?string $navigationLabel = 'Hasil Olah';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-sparkles';
 
     public static function form(Form $form): Form
     {

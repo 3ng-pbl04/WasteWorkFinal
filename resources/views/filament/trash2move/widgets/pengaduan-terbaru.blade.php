@@ -25,11 +25,11 @@
                     @method('PUT')
                     <select name="status"
                         class="text-xs px-2 py-1 rounded-md border-gray-300 focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        onchange="this.form.submit()">
-                        <option value="terkirim" {{ $item->status == 'terkirim' ? 'selected' : '' }}>Terkirim</option>
-                        <option value="ditolak" {{ $item->status == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
-                        <option value="diterima" {{ $item->status == 'diterima' ? 'selected' : '' }}>Diterima</option>
-                        <option value="dijadwalkan" {{ $item->status == 'dijadwalkan' ? 'selected' : '' }}>Dijadwalkan</option>
+                        onchange="this.form.submit()" @if(session('updated_id') == $item->id) disabled @endif>
+                        <option value="terkirim" {{ old('status', $item->status) == 'terkirim' ? 'selected' : '' }}>Terkirim</option>
+                        <option value="ditolak" {{ old('status', $item->status) == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
+                        <option value="diterima" {{ old('status', $item->status) == 'diterima' ? 'selected' : '' }}>Diterima</option>
+                        <option value="dijadwalkan" {{ old('status', $item->status) == 'dijadwalkan' ? 'selected' : '' }}>Dijadwalkan</option>
                     </select>
                     <noscript>
                         <button type="submit"
@@ -38,6 +38,14 @@
                         </button>
                     </noscript>
                 </form>
+                @if(session('updated_id') == $item->id)
+                    <span class="text-xs text-green-600 ml-2">Status berhasil diubah!</span>
+                    <script>
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 1500);
+                    </script>
+                @endif
             </li>
         @endforeach
     </ul>

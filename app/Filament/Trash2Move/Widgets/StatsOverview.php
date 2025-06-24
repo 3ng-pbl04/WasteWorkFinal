@@ -20,8 +20,22 @@ class StatsOverview extends BaseWidget
             ->description('Total pengaduan dalam 1 bulan')
             ->icon('heroicon-o-clipboard-document'),
 
-           
-        ];
+        Stat::make(
+            'Total User Terdaftar',
+            \App\Models\User::count()
+        )
+            ->description('Jumlah seluruh user yang terdaftar')
+            ->icon('heroicon-o-users'),
+
+    
+
+        Stat::make(
+            'Jumlah Postingan',
+            \App\Models\Postingan::count()
+        )
+            ->description('Total seluruh postingan')
+            ->icon('heroicon-o-document-text')
+    ];
     }
 
     public function getColumnSpan(): int|string|array

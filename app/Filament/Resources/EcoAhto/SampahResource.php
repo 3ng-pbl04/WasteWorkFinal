@@ -50,14 +50,14 @@ class SampahResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
-                    'Masuk' => 'gray',
+                    'Masuk' => 'primary',
                     'Disortir' => 'warning',
                     'Dicacah' => 'info',
                     'Dikeringkan' => 'yellow',
-                    'Dipilah' => 'blue',
+                    'Dipilah' => 'purple',
                     'Selesai' => 'success',
                     default => 'secondary',
-    })
+                })
 
             ])
             ->actions([

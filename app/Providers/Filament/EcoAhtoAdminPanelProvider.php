@@ -18,8 +18,9 @@ use App\Models\Admin;
 use Filament\Pages\Dashboard;
 use App\Filament\Admin\Widgets\AccountWidget;
 use App\Filament\Admin\Widgets\FilamentInfoWidget;
-
-
+use App\Filament\EcoAhto\Widgets\EcoAhtoOverview;
+use App\Filament\EcoAhto\Widgets\RecentSampahTable;
+use App\Filament\EcoAhto\Widgets\SampahMasukChart;
 
 class EcoAhtoAdminPanelProvider extends PanelProvider
 {
@@ -33,10 +34,13 @@ class EcoAhtoAdminPanelProvider extends PanelProvider
             ->authGuard('eco')
             ->discoverResources(app_path('Filament/Resources/EcoAhto'), 'App\\Filament\\Resources\\EcoAhto')
             ->discoverPages(app_path('Filament/Pages/EcoAhto'), 'App\\Filament\\Pages\\EcoAhto')
-            ->discoverWidgets(in: app_path('Filament/Admin/Widgets/EcoAhto'), for: 'App\\Filament\\Admin\\Widgets\\EcoAhto')
+            // ->discoverWidgets(in: app_path('Filament/EcoAhto/Widgets'), for: 'App\\Filament\\EcoAhto\\Widgets')
             ->widgets([
-                // Add your widget classes here, e.g. ExampleWidget::class,
-            ])
+            SampahMasukChart::make(),
+            EcoAhtoOverview::make(),
+            RecentSampahTable::make(),
+])
+
             ->pages([
     Dashboard::class,
 ])
