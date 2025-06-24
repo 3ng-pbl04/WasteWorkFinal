@@ -31,14 +31,15 @@ class PengaduanResource extends Resource
             TextInput::make('nama')
                 ->required()
                 ->maxLength(255),
+
             TextInput::make('no_telp')
                 ->required()
                 ->maxLength(20),
-            TextInput::make('email')
 
-                ->required(),
+            TextInput::make('email')
+                ->required()
                 ->maxLength(255),
-          
+
             Textarea::make('alamat')
                 ->required(),
 
@@ -55,6 +56,7 @@ class PengaduanResource extends Resource
 
             Textarea::make('keterangan')
                 ->required(),
+
             TextInput::make('titik_koordinat')
                 ->required()
                 ->maxLength(255),
