@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Volunteer;
 use Illuminate\Support\Facades\Storage;
-
-
 class VolunteerController extends Controller
 {
     public function create()
