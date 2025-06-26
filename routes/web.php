@@ -1,27 +1,29 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PengaduanController;
-use App\Http\Controllers\VolunteerController;
-use App\Http\Controllers\UlasanController;
-use Illuminate\Support\Facades\Session;
+use App\Exports\BahanBakuExport;
+use App\Exports\HasilOlahExport;
+use App\Exports\SampahExport;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\PageSettingController;
 
 // Route::get('/', function () {
 //     return view('welcome')->with('success', Session::get('success'));
 // });
-use Maatwebsite\Excel\Facades\Excel;
-use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\PostinganController;
 use App\Http\Controllers\TestimonialController;
-use App\Http\Controllers\PageSettingController;
+use App\Http\Controllers\UlasanController;
+use App\Http\Controllers\VolunteerController;
 
-use App\Models\Sampah;
 use App\Models\BahanBaku;
 use App\Models\HasilOlah;
+use App\Models\Sampah;
 
-use App\Exports\SampahExport;
-use App\Exports\BahanBakuExport;
-use App\Exports\HasilOlahExport;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 Route::resource('pengaduan', PengaduanController::class);
 Route::resource('volunteer', VolunteerController::class);
@@ -33,6 +35,9 @@ Route::get('/', [PostinganController::class, 'index'])->name('welcome');
 
 // ✅Halaman berita detail dinamis
 Route::get('/berita/{id}', [PostinganController::class, 'show'])->name('berita.detail1');
+
+Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
+Route::get('/berita/{berita}', [BeritaController::class, 'show'])->name('berita.show');
 
 //  Export Excel & PDF
 Route::get('/export-sampah', fn() => Excel::download(new SampahExport, 'data-sampah.xlsx'))->name('export.sampah');

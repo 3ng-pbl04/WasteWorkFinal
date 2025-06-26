@@ -2,7 +2,6 @@
 
 namespace App\Providers\Filament;
 
-// use App\Filament\Admin\Widgets\StatsOverview;
 use App\Filament\Trash2Move\Widgets\StatsOverview;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -17,15 +16,16 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Pages\Dashboard;
+
 use App\Filament\Trash2Move\Widgets\ProdukOverview;
 use App\Filament\Trash2Move\Widgets\PengaduanTerbaru;
 use App\Filament\Trash2Move\Widgets\PengaduanChart;
 use App\Filament\Trash2Move\Widgets\QuickActions;
 use App\Filament\Trash2Move\Widgets\Produkinfo;
+use App\Filament\Pages\Trash2Move\Auth\LoginCustom;
+
 use App\Models\Pengaduan;
 use App\Models\Produk;
-// use Filament\Widgets\WidgetGroup; // Removed because WidgetGroup does not exist in Filament
-
 
 class Trash2MoveAdminPanelProvider extends PanelProvider
 {
@@ -35,24 +35,22 @@ class Trash2MoveAdminPanelProvider extends PanelProvider
             ->id('trash2move')
             ->path('admin-trash')
             ->brandName('Trash2Move')
-            ->login()
+            ->login(action: LoginCustom::class)
             ->authGuard('trash')
             ->discoverResources(app_path('Filament/Resources/Trash2Move'), 'App\\Filament\\Resources\\Trash2Move')
             ->discoverPages(app_path('Filament/Pages/Trash2Move'), 'App\\Filament\\Pages\\Trash2Move')
             ->discoverWidgets(in: app_path('Filament/Trash2Move/Widgets'), for: 'App\\Filament\\Trash2Move\\Widgets')
-->widgets([
-    StatsOverview::class,      // Atas, lebar penuh
-    ProdukOverview::class,     // Tengah, tiga sejajar
-    Produkinfo::class,
-    PengaduanTerbaru::class,
-    PengaduanChart::class,     // Bawah, grafik lebar penuh
-    QuickActions::class, // Uncomment if you have a QuickActions widget
-])
-
+            ->widgets([
+                StatsOverview::class,
+                ProdukOverview::class,
+                Produkinfo::class,
+                PengaduanTerbaru::class,
+                PengaduanChart::class,
+                QuickActions::class,
+            ])
             ->pages([
                 Dashboard::class,
             ])
-
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

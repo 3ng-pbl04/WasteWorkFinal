@@ -1,0 +1,9 @@
+body {
+    background: rgb(var(--primary-900));
+    background: url("/images/sampah.jpg") center / cover,
+        linear-gradient(
+            0deg,
+            rgba(var(--primary-900), 1) 0%,
+            rgba(var(--primary-500), 1) 100%
+        );
+}

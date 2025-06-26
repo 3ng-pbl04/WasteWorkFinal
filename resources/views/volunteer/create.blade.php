@@ -1,280 +1,280 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Volunteer</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-B8f6f2vA0ZzcvGLpMnq98zO23NBF7U9Ck2J+BB3OQcrWikDbdAG3WjO4CX84yGB3qABeWwF0LKJpKkI0a43pbg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Tailwind CSS v4 via CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
-        #map { height: 300px; }
-        .form-container { background-color: #f8f9fa; padding: 20px; border-radius: 8px; }
-        .card-header { background-color: #28a745; }
-        .hero {
-            background-image: url('/images/sampah.jpg');
-            background-size: cover;
-            background-position: center;
-            padding: 100px 0;
-            text-align: center;
-            color: white;
-            position: relative;
+        .radio-card {
+            transition: all 0.2s ease;
         }
-        .hero::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+        .radio-card:hover {
+            transform: translateY(-2px);
         }
-        .hero .container {
-            position: relative;
-            z-index: 1;
-        }
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .header-container { display: flex; align-items: center; padding: 20px 0; }
-        .logo { display: flex; align-items: center; }
-        .logo img { height: 50px; margin-right: 15px; }
-        .stats-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin: 30px 0;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .stat-item { text-align: center; margin: 10px; padding: 15px; }
-        .stat-item h3 { color: #28a745; font-size: 2rem; margin-bottom: 5px; }
-        .divider { border-top: 1px solid #dee2e6; margin: 20px 0; }
-
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 50px 0 20px;
-            margin-top: 50px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-about { padding-right: 20px; }
-        .footer-logo { display: flex; align-items: center; margin-bottom: 20px; }
-        .footer-logo img { height: 40px; margin-right: 15px; }
-        .footer-logo h2 { color: white; font-size: 1.5rem; margin: 0; }
-        .footer-about p { margin-bottom: 20px; line-height: 1.6; }
-
-        .social-links { display: flex; gap: 15px; }
-        .social-links a {
-            display: inline-block;
-            width: 36px;
-            height: 36px;
-            background-color: #34495e;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 36px;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background-color: #28a745;
-            transform: translateY(-3px);
-        }
-
-        .footer-heading {
-            color: #28a745;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-heading::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 2px;
-            background-color: #28a745;
-        }
-
-        .footer-links { list-style: none; padding: 0; margin: 0; }
-        .footer-links li { margin-bottom: 10px; }
-        .footer-links a { color: #ecf0f1; text-decoration: none; transition: color 0.3s ease; }
-        .footer-links a:hover { color: #28a745; }
-        .footer-links li:not(a) { color: #bdc3c7; }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #34495e;
-            color: #bdc3c7;
-            font-size: 0.9rem;
+        .radio-card input:checked + label {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+            box-shadow: 0 0 0 2px #bfdbfe;
         }
     </style>
 </head>
-<body>
-
-<header>
-        <div class="container header-container">
-            <div class="logo">
-                   <img src="/images/LOGO.png" alt="TRASH2MOVE Logo">
-                <h1>TRASH2MOVE</h1>
+<body class="bg-gray-50 font-sans antialiased">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center">
+                <img src="/images/LOGO.png" alt="TRASH2MOVE Logo" class="h-12 w-auto mr-3">
+                <h1 class="text-xl font-bold text-gray-800">TRASH2MOVE</h1>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#home">Beranda</a></li>
-                    <li><a href="#company">Tentang Kami</a></li>
-                    <li><a href="#products">Produk</a></li>
-                    <li><a href="#news">Berita</a></li>
-                    <li><a href="#testimonials">Ulasan</a></li>
-                    <li><a href="#contact">Kontak</a></li>
-                    <li><a href="#login">Login</a></li>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+
+            <!-- Navigation -->
+            <nav id="mobile-menu" class="hidden md:block w-full md:w-auto">
+                <ul class="flex flex-col md:flex-row items-center gap-4 md:gap-6 py-4 md:py-0">
+                    <li><a href="#home" class="text-gray-700 hover:text-blue-600 transition-colors">Beranda</a></li>
+                    <li><a href="#company" class="text-gray-700 hover:text-blue-600 transition-colors">Tentang Kami</a></li>
+                    <li><a href="#products" class="text-gray-700 hover:text-blue-600 transition-colors">Produk</a></li>
+                    <li><a href="#news" class="text-gray-700 hover:text-blue-600 transition-colors">Berita</a></li>
+                    <li><a href="#testimonials" class="text-gray-700 hover:text-blue-600 transition-colors">Ulasan</a></li>
+                    <li><a href="#contact" class="text-gray-700 hover:text-blue-600 transition-colors">Kontak</a></li>
+                    <li><a href="#login" class="text-gray-700 hover:text-blue-600 transition-colors">Login</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-<section id="home" class="hero">
-    <div class="container">
-        <h2 class="display-4 fw-bold">Ubah Sampah Menjadi Solusi</h2>
-        <p class="lead fs-5">Misi kami adalah mendaur ulang limbah menjadi produk berkualitas tinggi yang tidak hanya ramah lingkungan tetapi juga fungsional dan estetis.</p>
-        <div class="cta-buttons">
-        <a href="/" class="btn btn-success btn-lg px-4">Kembali ke Beranda</a>
+    <!-- Hero Section -->
+    <section id="home" class="relative bg-cover bg-center py-20 md:py-32" style="background-image: url('/images/sampah.jpg')">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Ubah Sampah Menjadi Solusi</h2>
+            <p class="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                Misi kami adalah mendaur ulang limbah menjadi produk berkualitas tinggi yang tidak hanya ramah lingkungan tetapi juga fungsional dan estetis.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
+                    Kembali ke Beranda
+                </a>
+                <a href="/pengaduan/create" class="bg-white/10 hover:bg-white/20 backdrop-blur-sm border-2 border-white text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
+                      <i class="fas fa-hands"></i> Ajukan Aksi
+                </a>
+            </div>
+        </div>
+    </section>
 
-            <button class="btn btn-outline-light btn-lg px-4">Jadi Volunteer</button>
+    <!-- Divider -->
+    <div class="border-t border-gray-200/50 my-6"></div>
+
+    <!-- Volunteer Form Section -->
+    <div class="container mx-auto px-4 py-8 md:py-12">
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="bg-blue-600 text-white py-4 px-6">
+                <h4 class="text-xl font-bold">Form Volunteer</h4>
+                <p class="text-blue-100">Bergabunglah dengan kami untuk menciptakan perubahan!</p>
+            </div>
+
+            <div class="p-6 md:p-8">
+                <form action="{{ route('volunteer.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                    @csrf
+
+                    <!-- Nama -->
+                    <div class="space-y-2">
+                        <label for="nama" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+                        <input type="text" id="nama" name="nama" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                    </div>
+
+                    <!-- No Telepon -->
+                    <div class="space-y-2">
+                        <label for="no_telp" class="block text-sm font-medium text-gray-700">No Telepon/WhatsApp</label>
+                        <input type="tel" id="no_telp" name="no_telp" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                            placeholder="Contoh: 081234567890">
+                    </div>
+
+
+                    <!-- Status Kesehatan -->
+                    <div class="space-y-3">
+                        <legend class="block text-sm font-medium text-gray-700">Apakah Anda memiliki riwayat penyakit?</legend>
+
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <!-- Ya Option -->
+                            <div class="radio-card flex-1">
+                                <input type="radio" id="status_ya" name="status_kesehatan" value="ya" class="sr-only peer">
+                                <label for="status_ya" class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:shadow-sm transition-all">
+                                    <span class="text-lg font-medium text-gray-700">Ya</span>
+                                    <span class="text-sm text-gray-500">Saya memiliki riwayat penyakit</span>
+                                </label>
+                            </div>
+
+                            <!-- Tidak Option -->
+                            <div class="radio-card flex-1">
+                                <input type="radio" id="status_tidak" name="status_kesehatan" value="tidak" class="sr-only peer" checked>
+                                <label for="status_tidak" class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:shadow-sm transition-all">
+                                    <span class="text-lg font-medium text-gray-700">Tidak</span>
+                                    <span class="text-sm text-gray-500">Saya tidak memiliki riwayat penyakit</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Penjelasan Penyakit (Conditional) -->
+                    <div id="penjelasan-container" class="hidden space-y-2">
+                        <label for="penjelasan" class="block text-sm font-medium text-gray-700">Jelaskan riwayat penyakit Anda</label>
+                        <textarea id="penjelasan" name="penjelasan" rows="3"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                            placeholder="Mohon jelaskan riwayat penyakit Anda secara singkat dan jelas"></textarea>
+                    </div>
+
+                    <!-- Alamat -->
+                    <div class="space-y-2">
+                        <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat Lengkap</label>
+                        <textarea id="alamat" name="alamat" rows="3" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                            placeholder="Tulis alamat lengkap termasuk RT/RW, Kecamatan, dan Kota"></textarea>
+                    </div>
+
+                    <!-- Submit Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md flex-1">
+                            <i class="fas fa-paper-plane mr-2"></i> Kirim Data Volunteer
+                        </button>
+                        <button type="reset" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg transition-colors shadow-md flex-1">
+                            <i class="fas fa-undo mr-2"></i> Reset Form
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</section>
 
-<div class="divider"></div>
-
-
-<div class="container mt-5">
-    <div class="card shadow">
-        <div class="card-header bg-info text-white">
-            <h4>Form Volunteer</h4>
-        </div>
-        <div class="card-body form-container">
-      <form action="{{ route('volunteer.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-
-    <!-- Nama -->
-    <div class="mb-3">
-        <label for="nama" class="form-label">Nama</label>
-        <input type="text" class="form-control" id="nama" name="nama" required>
-    </div>
-
-    <!-- No Telepon -->
-    <div class="mb-3">
-        <label for="no_telp" class="form-label">No Telepon</label>
-        <input type="text" class="form-control" id="no_telp" name="no_telp">
-    </div>
-
-    <!-- Riwayat Penyakit -->
-    <div class="mb-3">
-        <label class="form-label">Apakah Kamu Punya Riwayat Penyakit</label><br>
-
-        <input type="radio" class="btn-check" name="status_kesehatan" id="ya" value="ya" autocomplete="off" checked>
-        <label class="btn btn-outline-success" for="ya">Ya</label>
-
-        <input type="radio" class="btn-check" name="status_kesehatan" id="tidak" value="tidak" autocomplete="off">
-        <label class="btn btn-outline-danger" for="tidak">Tidak</label>
-    </div>
-
-    <!-- Penjelasan Penyakit -->
-    <div class="mb-3">
-        <label for="penjelasan_penyakit" class="form-label">Jika Iya, Jelaskan</label>
-        <div class="form-floating">
-            <textarea class="form-control" name="penjelasan_penyakit" placeholder="Jelaskan riwayat penyakit" id="penjelasan_penyakit"></textarea>
-            <label for="penjelasan_penyakit">Penjelasan Riwayat Penyakit</label>
-        </div>
-    </div>
-
-    <!-- Alamat -->
-    <div class="mb-3">
-        <label for="alamat" class="form-label">Alamat</label>
-        <div class="form-floating">
-            <textarea class="form-control" name="alamat" placeholder="Tulis alamat lengkap" id="alamat"></textarea>
-            <label for="alamat">Alamat Lengkap</label>
-        </div>
-    </div>
-
-    <!-- Tombol Submit & Reset -->
-    <button type="submit" class="btn btn-success">Kirim Data Volunteer</button>
-    <button type="reset" class="btn btn-warning">Reset</button>
-</form>
-
-        </div>
-    </div>
-</div>
-
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-
-<footer>
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-about">
-                <div class="footer-logo">
-                    <img src="/images/LOGO.png" alt="Trash2Move Logo">
-                    <h2>Trash2Move</h2>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- About Section -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="/images/LOGO.png" alt="Trash2Move Logo" class="h-10 w-auto mr-3">
+                        <h2 class="text-xl font-bold">Trash2Move</h2>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Trash2Move adalah perusahaan daur ulang inovatif yang mendedikasikan diri untuk mengubah limbah menjadi produk bernilai tinggi sambil membangun komunitas yang sadar lingkungan.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-9 h-9 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
                 </div>
-                <p>Trash2Move adalah perusahaan daur ulang inovatif yang mendedikasikan diri untuk mengubah limbah menjadi produk bernilai tinggi sambil membangun komunitas yang sadar lingkungan.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
+
+                <!-- Products Section -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-12 after:h-0.5 after:bg-blue-500">
+                        Produk
+                    </h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Furniture</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Aksesori</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Kemasan</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Dekorasi</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company Section -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-12 after:h-0.5 after:bg-blue-500">
+                        Perusahaan
+                    </h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Tentang Kami</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Tim</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Karir</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Section -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-12 after:h-0.5 after:bg-blue-500">
+                        Kontak
+                    </h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-map-marker-alt mt-1 text-blue-400"></i>
+                            <span>Jl. Hijau Lestari No.123, Jakarta Selatan</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-phone text-blue-400"></i>
+                            <span>+62 21 1234 5678</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-envelope text-blue-400"></i>
+                            <span>info@trash2move.id</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-clock text-blue-400"></i>
+                            <span>Senin-Jumat: 08.00-17.00</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="footer-links-section">
-                <h3 class="footer-heading">Produk</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Furniture</a></li>
-                    <li><a href="#">Aksesori</a></li>
-                    <li><a href="#">Kemasan</a></li>
-                    <li><a href="#">Dekorasi</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-links-section">
-                <h3 class="footer-heading">Perusahaan</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Tentang Kami</a></li>
-                    <li><a href="#">Tim</a></li>
-                    <li><a href="#">Karir</a></li>
-                    <li><a href="#">Blog</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-links-section">
-                <h3 class="footer-heading">Kontak</h3>
-                <ul class="footer-links">
-                    <li>Jl. Hijau Lestari No.123</li>
-                    <li>Jakarta Selatan, Indonesia</li>
-                    <li>+62 21 1234 5678</li>
-                    <li>info@trash2move.id</li>
-                </ul>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+                &copy; 2025 Trash2Move. Hak Cipta Dilindungi.
             </div>
         </div>
-        <div class="copyright">
-            &copy; 2025 Trash2Move. Hak Cipta Dilindungi.
-        </div>
-    </div>
-</footer>
+    </footer>
 
+    <script>
+        // Toggle mobile menu
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Toggle penjelasan penyakit field based on radio selection
+        const statusYa = document.getElementById('status_ya');
+        const statusTidak = document.getElementById('status_tidak');
+        const penjelasanContainer = document.getElementById('penjelasan-container');
+
+        function togglePenjelasanField() {
+            if (statusYa.checked) {
+                penjelasanContainer.classList.remove('hidden');
+                document.getElementById('penjelasan').required = true;
+            } else {
+                penjelasanContainer.classList.add('hidden');
+                document.getElementById('penjelasan').required = false;
+            }
+        }
+
+        statusYa.addEventListener('change', togglePenjelasanField);
+        statusTidak.addEventListener('change', togglePenjelasanField);
+
+        // Initialize based on default selection
+        togglePenjelasanField();
+    </script>
 </body>
 </html>

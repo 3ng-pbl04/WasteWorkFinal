@@ -19,6 +19,7 @@ class VolunteerController extends Controller
             'no_telp' => 'required|string|max:20',
             'alamat' => 'required|string',
             'status_kesehatan' => 'required|string',
+            'penjelasan' => 'required|string',
         ]);
 
         if ($request->hasFile('foto')) {

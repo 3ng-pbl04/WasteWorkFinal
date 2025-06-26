@@ -3,9 +3,10 @@
 namespace App\Filament\Resources\Trash2Move\PageSettingResource\Pages;
 
 use App\Filament\Resources\Trash2Move\PageSettingResource;
-use Filament\Resources\Pages\EditRecord;
-use Filament\Forms\Form;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Resources\Pages\EditRecord;
 
 class FooterPageSetting extends EditRecord
 {
@@ -49,6 +50,12 @@ public function getBreadcrumbs(): array
                 ->label('TikTok')
                 ->url()
                 ->nullable(),
+
+            Textarea::make('alamat')
+                ->label('Alamat')
+                ->rows(3)
+                ->nullable(),
+
         ]);
     }
 }

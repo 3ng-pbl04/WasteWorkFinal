@@ -2,396 +2,418 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Berita</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <title>Berita | {{ $page_settings->company_name ?? 'Trash2Move' }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-B8f6f2vA0ZzcvGLpMnq98zO23NBF7U9Ck2J+BB3OQcrWikDbdAG3WjO4CX84yGB3qABeWwF0LKJpKkI0a43pbg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui']
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f4f6f5;
-    color: #333;
-    line-height: 1.7;
-}
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-.about-right {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+        .prose :where(img):not(:where([class~="not-prose"] *)) {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
 
-.about-right:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-}
+        .article-content p {
+            margin-bottom: 1.25em;
+        }
 
-.about-img img {
-    width: 100%;
-    border-radius: 12px;
-    transition: transform 0.3s ease;
-}
-
-.about-img img:hover {
-    transform: scale(1.03);
-}
-
-.section-tittle h3 {
-    font-size: 28px;
-    font-weight: 700;
-    color: #28a745;
-    border-left: 4px solid #28a745;
-    padding-left: 15px;
-    margin-bottom: 20px;
-}
-
-.about-prea p {
-    font-size: 17px;
-    color: #4f4f4f;
-    margin-bottom: 20px;
-    text-align: justify;
-}
-
-.social-share ul {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin-top: 15px;
-    gap: 15px;
-}
-
-.social-share ul li a img {
-    width: 36px;
-    border-radius: 50%;
-    transition: transform 0.3s ease;
-}
-
-.social-share ul li a:hover img {
-    transform: scale(1.1);
-}
-
-.form-contact .form-control {
-    border-radius: 10px;
-    border: 1px solid #c8d6c5;
-    padding: 12px 16px;
-    font-size: 16px;
-    transition: border 0.3s;
-    background-color: #fff;
-}
-
-.form-contact .form-control:focus {
-    border-color: #28a745;
-    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.2);
-}
-
-.button-contactForm {
-    background-color: #28a745;
-    color: #fff;
-    padding: 12px 28px;
-    font-size: 16px;
-    font-weight: 600;
-    border: none;
-    border-radius: 10px;
-    transition: background-color 0.3s ease;
-}
-
-.button-contactForm:hover {
-    background-color: #1e7e34;
-}
-
-/* Responsive enhancement */
-@media (max-width: 768px) {
-    .about-right {
-        padding: 20px;
-    }
-
-    .section-tittle h3 {
-        font-size: 24px;
-    }
-
-    .about-right {
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-}
-
-.about-img img {
-    border-radius: 10px;
-    max-height: 400px;
-    object-fit: cover;
-}
-
-.section-tittle h3,
-.section-tittle h4,
-.section-tittle h5 {
-    font-weight: 700;
-    color: #28a745;
-    border-left: 4px solid #28a745;
-    padding-left: 10px;
-}
-
-.about-prea p {
-    font-size: 16px;
-    line-height: 1.8;
-    color: #333;
-    text-align: justify;
-}
-
-.social-share img:hover {
-    transform: scale(1.1);
-    transition: 0.3s;
-}
-
-.full-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-}
-}
-.divider {
-    border-top: 2px solid #ddd;
-    margin: 15px 0;
-}
-
-.about-img img {
-    width: 100%;
-    max-height: 500px;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
-.container.berita-container {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-    .add-comment {
-        margin-top: 20px;
-    }
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #16a34a, #22c55e);
+        }
     </style>
 </head>
-<body>
-
-<header>
-        <div class="container header-container">
-            <div class="logo">
-            <img src="{{ asset('storage/' . $page_settings->company_logo) }}" alt="Hero Image">
-                <h1>{{ $page_settings->company_name ?? 'Judul Default' }}</h1>
+<body class="bg-gray-50 font-sans antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <img src="{{ asset('storage/' . $page_settings->company_logo) }}" alt="Logo" class="h-10">
+                <h1 class="text-xl font-bold text-gray-800">{{ $page_settings->company_name ?? 'Trash2Move' }}</h1>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#home">Beranda</a></li>
-                    <li><a href="#company">Tentang Kami</a></li>
-                    <li><a href="#products">Produk</a></li>
-                    <li><a href="#news">Berita</a></li>
-                    <li><a href="#testimonials">Ulasan</a></li>
-                    <li><a href="#contact">Kontak</a></li>
-                    <li><a href="{{ route('login') }}">Login</a></li>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-8">
+                    <li><a href="#home" class="text-gray-600 hover:text-primary-600 transition">Beranda</a></li>
+                    <li><a href="#company" class="text-gray-600 hover:text-primary-600 transition">Tentang Kami</a></li>
+                    <li><a href="#products" class="text-gray-600 hover:text-primary-600 transition">Produk</a></li>
+                    <li><a href="#news" class="text-gray-600 hover:text-primary-600 transition">Berita</a></li>
+                    <li><a href="#testimonials" class="text-gray-600 hover:text-primary-600 transition">Ulasan</a></li>
+                    <li><a href="#contact" class="text-gray-600 hover:text-primary-600 transition">Kontak</a></li>
+                    <li><a href="{{ route('login') }}" class="text-primary-600 font-medium">Login</a></li>
                 </ul>
             </nav>
+            <button class="md:hidden text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
         </div>
     </header>
-<section id="home" class="hero"
-    style="background-image: url('{{ $page_settings->hero_image ? asset('storage/' . $page_settings->hero_image) : asset('images/sampah.jpg') }}');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 100px 0;
-    color: white;
-    text-align: center;
-    ">
-    <div class="container">
-        <h2>{{ $page_settings->hero_title ?? 'Judul Default' }}</h2>
-        <p>{{ $page_settings->hero_description ?? 'Deskripsi Default' }}</p>
 
-        <div class="cta-buttons mt-4">
-            <a href="/">
-                <button class="btn btn-primary" onclick="openModal('location-modal')">
-                    Kembali Ke Beranda
-                </button>
-            </a>
-            <a href="/volunteer/create">
-                <button class="btn btn-info" onclick="openModal('location-modal')">
-                    Jadi Volunteer
-                </button>
-            </a>
-        </div>
-    </div>
-</section>
-
-
-    <div class="divider" style="border: none; background: transparent; height: 1px;"></div>
-
-<div class="container berita-container py-4">
-    <div class="row">
-        <!-- KONTEN BERITA -->
-        <div class="col-lg-8 mb-4">
-            <div class="about-right shadow-sm p-4 rounded bg-white">
-                <!-- Gambar -->
-                <div class="about-img mb-6">
-                    <img src="{{ asset('storage/' . $berita->gambar) }}"
-                        alt="Gambar Berita"
-                        class="w-full max-h-[250px] object-cover rounded-xl shadow">
-                </div>
-
-
-                <!-- Judul -->
-                <div class="section-tittle mb-3 text-center">
-                    <h3 class="text-success">{{ $berita->judul }}</h3>
-                </div>
-
-                <!-- Tanggal & Admin -->
-                <p class="text-muted text-center mb-4">
-                    {{ \Carbon\Carbon::parse($berita->tanggal)->translatedFormat('d F Y') }}
-                    @if ($berita->admin && isset($berita->admin->username))
-                        · Diposting oleh: {{ $berita->admin->username }}
-                    @endif
-                </p>
-
-                <!-- Konten -->
-                <div class="about-prea mb-4">
-                    <p class="mb-3">{{ $berita->deskripsi }}</p>
-                </div>
-
-                <!-- Subjudul -->
-                @if (!empty($berita->subjudul))
-                    <div class="section-tittle mb-3">
-                        <h4>{{ $berita->subjudul }}</h4>
-                    </div>
-                @endif
-
-                <!-- Bagikan -->
-                <div class="social-share pt-4 border-top mt-4">
-                    <div class="section-tittle mb-2">
-                        <h4>Bagikan:</h4>
-                    </div>
-                    <ul class="list-inline">
-                        <li class="list-inline-item me-2">
-                            <a href="#" style="color:#E4405F;"><i class="fab fa-instagram"></i></a>
-                        </li>
-                        <li class="list-inline-item me-2">
-                            <a href="#" style="color:#1877F2;"><i class="fab fa-facebook"></i></a>
-                        </li>
-                        <li class="list-inline-item me-2">
-                            <a href="#" style="color:#1DA1F2;"><i class="fab fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" style="color:#FF0000;"><i class="fab fa-youtube"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                        <div class="add-comment">
-                <h3>Tambahkan Komentar Anda</h3>
-            <form id="comment-form" method="POST" action="{{ route('ulasan.store') }}">
-                    @csrf
-        <div class="form-group">
-            <label for="comment-name">Nama</label>
-            <input type="text" id="comment-name" name="nama" class="form-input" placeholder="Masukkan nama Anda" required>
-        </div>
-
-        <div class="form-group">
-            <label for="comment-role">Peran</label>
-            <input type="text" id="comment-role" name="peran" class="form-input" placeholder="Masukkan peran Anda (misalnya, Pelanggan, Volunteer, dll.)" required>
-        </div>
-
-        <div class="form-group">
-            <label for="comment-text">Komentar</label>
-            <textarea id="comment-text" name="deskripsi" class="form-textarea" placeholder="Tulis komentar Anda di sini..." required></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Kirim Komentar</button>
-    </form>
-            </div>
+    <!-- Hero Section -->
+    <section id="home" class="relative py-20 md:py-28 bg-cover bg-center"
+             style="background-image: url('{{ $page_settings->hero_image ? asset('storage/' . $page_settings->hero_image) : asset('images/sampah.jpg') }}')">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="container mx-auto px-4 relative z-10 text-center text-white">
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{{ $page_settings->hero_title ?? 'Bersama Menjaga Lingkungan' }}</h2>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">{{ $page_settings->hero_description ?? 'Mari berkolaborasi untuk menciptakan dunia yang lebih bersih dan berkelanjutan' }}</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/" class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition duration-300">
+                    <i class="fas fa-home mr-2"></i> Kembali Ke Beranda
+                </a>
+                <a href="/volunteer/create" class="inline-flex items-center justify-center px-6 py-3 bg-white hover:bg-gray-100 text-gray-800 font-medium rounded-lg transition duration-300">
+                    <i class="fas fa-hands-helping mr-2"></i> Jadi Volunteer
+                </a>
             </div>
         </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Article Content -->
+            <article class="lg:w-2/3">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <!-- Featured Image -->
+                    <div class="relative overflow-hidden h-80 md:h-96">
+                        <img src="{{ asset('storage/' . $berita->gambar) }}"
+                             alt="{{ $berita->judul }}"
+                             class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+
+                    <!-- Article Header -->
+                    <div class="p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+                            <div class="flex items-center space-x-2 text-sm text-gray-500 mb-3 md:mb-0">
+                                <span class="flex items-center">
+                                    <i class="far fa-calendar-alt mr-1"></i>
+                                    {{ \Carbon\Carbon::parse($berita->tanggal)->translatedFormat('d F Y') }}
+                                </span>
+                                <span>•</span>
+                                <span class="flex items-center">
+                                    <i class="far fa-user mr-1"></i>
+                                    @if ($berita->admin && isset($berita->admin->username))
+                                        Diposting oleh: {{ $berita->admin->username }}
+                                    @else
+                                        Admin
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm text-gray-500">Bagikan:</span>
+                                <div class="flex space-x-2">
+                                    <a href="#" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-primary-100 text-gray-600 hover:text-primary-600 flex items-center justify-center transition">
+                                        <i class="fab fa-facebook-f text-sm"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-primary-100 text-gray-600 hover:text-primary-600 flex items-center justify-center transition">
+                                        <i class="fab fa-twitter text-sm"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-primary-100 text-gray-600 hover:text-primary-600 flex items-center justify-center transition">
+                                        <i class="fab fa-instagram text-sm"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-primary-100 text-gray-600 hover:text-primary-600 flex items-center justify-center transition">
+                                        <i class="fab fa-whatsapp text-sm"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article Title -->
+                        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-6 leading-tight">
+                            {{ $berita->judul }}
+                        </h1>
+
+                        <!-- Article Content -->
+                        <div class="prose max-w-none article-content text-gray-700">
+                            <p class="text-lg leading-relaxed">{{ $berita->deskripsi }}</p>
+
+                            @if (!empty($berita->subjudul))
+                                <h2 class="text-xl md:text-2xl font-semibold text-gray-800 mt-8 mb-4">{{ $berita->subjudul }}</h2>
+                            @endif
+
+                            <!-- Additional content can be added here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="mt-12 bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6 md:p-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i class="far fa-comments mr-2 text-primary-600"></i>
+                            Tambahkan Komentar Anda
+                        </h3>
+
+                        <form id="comment-form" method="POST" action="{{ route('ulasan.store') }}" class="space-y-4">
+                            @csrf
+
+                            <div>
+                                <label for="comment-name" class="block text-sm font-medium text-gray-700 mb-1">Nama</label>
+                                <input type="text" id="comment-name" name="nama"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition"
+                                       placeholder="Masukkan nama Anda" required>
+                            </div>
+
+                            <div>
+                                <label for="comment-role" class="block text-sm font-medium text-gray-700 mb-1">Peran</label>
+                                <input type="text" id="comment-role" name="peran"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition"
+                                       placeholder="Masukkan peran Anda (misalnya, Pelanggan, Volunteer, dll.)" required>
+                            </div>
+
+                            <div>
+                                <label for="comment-text" class="block text-sm font-medium text-gray-700 mb-1">Komentar</label>
+                                <textarea id="comment-text" name="deskripsi" rows="4"
+                                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition"
+                                          placeholder="Tulis komentar Anda di sini..." required></textarea>
+                            </div>
+
+                            <button type="submit"
+                                    class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition duration-300">
+                                Kirim Komentar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Sidebar -->
+            <aside class="lg:w-1/3 space-y-6">
+                <!-- About Widget -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6 md:p-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-info-circle mr-2 text-primary-600"></i>
+                            Tentang Kami
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            {{ $page_settings->company_description ?? 'Trash2Move adalah perusahaan daur ulang inovatif yang mendedikasikan diri untuk mengubah limbah menjadi produk bernilai tinggi.' }}
+                        </p>
+                        <a href="#company" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium">
+                            Selengkapnya
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Recent News Widget -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="p-6 md:p-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <i class="far fa-newspaper mr-2 text-primary-600"></i>
+                Berita Terbaru
+            </h3>
+            <div class="space-y-4">
+                <!-- Menampilkan berita terbaru dari database -->
+                @forelse($beritaTerbaru as $news)
+                    <div class="flex items-start space-x-3">
+                        <!-- Gambar berita -->
+                        <div class="flex-shrink-0 w-20 h-16 overflow-hidden rounded-lg">
+                            <img src="{{ asset('storage/' . $news->gambar) }}"
+                                alt="{{ $news->judul }}"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <!-- Judul dan tanggal berita -->
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-800 hover:text-primary-600 transition">
+                                <a href="{{ route('berita.show', $news->id) }}">{{ $news->judul }}</a>
+                            </h4>
+                            <p class="text-xs text-gray-500">
+                                {{ \Carbon\Carbon::parse($news->tanggal)->translatedFormat('d F Y') }}
+                            </p>
+                        </div>
+                    </div>
+                @empty
+                    <!-- Tampilkan pesan jika tidak ada berita -->
+                    <p class="text-sm text-gray-500">Tidak ada berita terbaru</p>
+                @endforelse
+            </div>
+
+        <!-- Tautan "Lihat Semua" jika ada berita -->
+        @if($beritaTerbaru->count() > 0)
+            <div class="mt-4 text-right">
+                <a href="{{ route('berita.index') }}" class="text-sm text-primary-600 hover:text-primary-700 font-medium">
+                    Lihat Semua Berita <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+        @endif
     </div>
 </div>
 
-
-<footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-about">
-                    <div class="footer-logo">
-                        <img src="{{ asset('storage/' . $page_settings->company_logo) }}" alt="Hero Image">
-                        <h2>Trash2Move</h2>
+                <!-- Newsletter Widget -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="p-6 md:p-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-chart-line mr-2 text-primary-600"></i>
+                        Dampak Kami
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4 text-center">
+                        <div class="bg-primary-50 p-4 rounded-lg">
+                            <div class="text-3xl font-bold text-primary-600">15K+</div>
+                            <div class="text-sm text-gray-600 mt-1">Ton Sampah Didaur Ulang</div>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <div class="text-3xl font-bold text-green-600">500+</div>
+                            <div class="text-sm text-gray-600 mt-1">Produk Inovatif</div>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <div class="text-3xl font-bold text-yellow-600">250+</div>
+                            <div class="text-sm text-gray-600 mt-1">Komunitas Terlibat</div>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <div class="text-3xl font-bold text-purple-600">10K+</div>
+                            <div class="text-sm text-gray-600 mt-1">Pohon Ditanam</div>
+                        </div>
                     </div>
-                    <p>
-                        {{ $page_settings->footer_text ?? 'Trash2Move adalah perusahaan daur ulang inovatif yang mendedikasikan diri untuk mengubah limbah menjadi produk bernilai tinggi sambil membangun komunitas yang sadar lingkungan.' }}
+                </div>
+            </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- About Column -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="{{ asset('storage/' . $page_settings->company_logo) }}" alt="Logo" class="h-10">
+                        <h3 class="text-xl font-bold gradient-text">{{ $page_settings->company_name ?? 'Trash2Move' }}</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        {{ $page_settings->footer_text ?? 'Trash2Move adalah perusahaan daur ulang inovatif yang mendedikasikan diri untuk mengubah limbah menjadi produk bernilai tinggi.' }}
                     </p>
-
-                <div class="social-links">
-                    @if ($page_settings->facebook_link)
-                        <a href="{{ $page_settings->facebook_link }}" class="fb" target="_blank" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                    @endif
-
-                    @if ($page_settings->instagram_link)
-                        <a href="{{ $page_settings->instagram_link }}" class="ig" target="_blank" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    @endif
-
-                    @if ($page_settings->twitter_link)
-                        <a href="{{ $page_settings->twitter_link }}" class="tw" target="_blank" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    @endif
-
-                    @if ($page_settings->youtube_link)
-                        <a href="{{ $page_settings->youtube_link }}" class="yt" target="_blank" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    @endif
-
-                    @if ($page_settings->tiktok_link)
-                        <a href="{{ $page_settings->tiktok_link }}" class="tt" target="_blank" aria-label="TikTok">
-                            <i class="fab fa-tiktok"></i>
-                        </a>
-                    @endif
-                </div>
+                    <div class="flex space-x-4">
+                        @if ($page_settings->facebook_link)
+                            <a href="{{ $page_settings->facebook_link }}" class="text-gray-300 hover:text-white transition" target="_blank">
+                                <i class="fab fa-facebook-f text-lg"></i>
+                            </a>
+                        @endif
+                        @if ($page_settings->instagram_link)
+                            <a href="{{ $page_settings->instagram_link }}" class="text-gray-300 hover:text-white transition" target="_blank">
+                                <i class="fab fa-instagram text-lg"></i>
+                            </a>
+                        @endif
+                        @if ($page_settings->twitter_link)
+                            <a href="{{ $page_settings->twitter_link }}" class="text-gray-300 hover:text-white transition" target="_blank">
+                                <i class="fab fa-twitter text-lg"></i>
+                            </a>
+                        @endif
+                        @if ($page_settings->youtube_link)
+                            <a href="{{ $page_settings->youtube_link }}" class="text-gray-300 hover:text-white transition" target="_blank">
+                                <i class="fab fa-youtube text-lg"></i>
+                            </a>
+                        @endif
+                        @if ($page_settings->tiktok_link)
+                            <a href="{{ $page_settings->tiktok_link }}" class="text-gray-300 hover:text-white transition" target="_blank">
+                                <i class="fab fa-tiktok text-lg"></i>
+                            </a>
+                        @endif
+                    </div>
                 </div>
 
-                <div class="footer-links-section">
-                    <h3 class="footer-heading">Produk</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Furniture</a></li>
-                        <li><a href="#">Aksesori</a></li>
-                        <li><a href="#">Kemasan</a></li>
-                        <li><a href="#">Dekorasi</a></li>
+                <!-- Products Column -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Produk</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Furniture</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Aksesori</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Kemasan</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Dekorasi</a></li>
                     </ul>
                 </div>
 
-                <div class="footer-links-section">
-                    <h3 class="footer-heading">Perusahaan</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Tentang Kami</a></li>
-                        <li><a href="#">Tim</a></li>
-                        <li><a href="#">Karir</a></li>
-                        <li><a href="#">Blog</a></li>
+                <!-- Company Column -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Perusahaan</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Tentang Kami</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Tim</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Karir</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Blog</a></li>
                     </ul>
                 </div>
 
-                <div class="footer-links-section">
-                    <h3 class="footer-heading">Kontak</h3>
-                    <ul class="footer-links">
-                        <li>Jl. Hijau Lestari No.123</li>
-                        <li>Jakarta Selatan, Indonesia</li>
-                        <li>+62 21 1234 5678</li>
-                        <li>info@ecorecycle.id</li>
+                <!-- Contact Column -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Kontak</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary-400"></i>
+                            <span class="text-gray-300">Jl. Hijau Lestari No.123, Jakarta Selatan</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-primary-400"></i>
+                            <span class="text-gray-300">+62 21 1234 5678</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-primary-400"></i>
+                            <span class="text-gray-300">info@ecorecycle.id</span>
+                        </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="copyright">
-                &copy; 2025 Zikry. Hak Cipta Dilindungi.
+            <div class="border-t border-gray-700 pt-6 text-center text-gray-400 text-sm">
+                &copy; 2025 {{ $page_settings->company_name ?? 'Trash2Move' }}. Hak Cipta Dilindungi.
             </div>
         </div>
     </footer>
 
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary-600 text-white shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Back to Top Button
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 </html>

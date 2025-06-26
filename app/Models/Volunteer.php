@@ -15,5 +15,6 @@ class Volunteer extends Model
         'no_telp',
         'alamat',
         'status_kesehatan',
+        'penjelasan',
     ];
 }

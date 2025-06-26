@@ -32,5 +32,6 @@ class PageSetting extends Model
         'twitter_link',
         'youtube_link',
         'tiktok_link',
+        'alamat',
     ];
 }

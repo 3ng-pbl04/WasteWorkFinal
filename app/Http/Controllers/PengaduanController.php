@@ -45,14 +45,6 @@ class PengaduanController extends Controller
         // 5. Kirim email konfirmasi
         // Pastikan sudah import: use Illuminate\Support\Facades\Mail;
         // dan class Mailable PengaduanTerkirim sudah ada dan di-import: use App\Mail\PengaduanTerkirim;
-        try {
-            Mail::to($pengaduan->email)
-                ->send(new PengaduanTerkirim($pengaduan));
-        } catch (\Exception $e) {
-            // Log error jika gagal kirim email
-            \Log::error('Gagal mengirim email konfirmasi pengaduan: ' . $e->getMessage());
-            // (Optional) Anda bisa menampilkan pesan khusus atau tetap lanjut tanpa menghentikan proses
-        }
 
         // 6. Redirect kembali dengan pesan sukses
         return back()->with('success', 'Pengaduan berhasil dikirim. Silakan cek email Anda.');

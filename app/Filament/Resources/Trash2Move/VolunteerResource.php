@@ -38,6 +38,7 @@ class VolunteerResource extends Resource
                 Tables\Columns\TextColumn::make('no_telp')->searchable(),
                 Tables\Columns\TextColumn::make('alamat')->searchable(),
                 Tables\Columns\TextColumn::make('status_kesehatan')->searchable(),
+                Tables\Columns\TextColumn::make('penjelasan')->searchable(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

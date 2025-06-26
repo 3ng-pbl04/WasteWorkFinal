@@ -92,8 +92,9 @@ class MitraResource extends Resource
 
                 TextColumn::make('logo_mitra')
                     ->label('Logo Mitra')
-                    ->formatStateUsing(fn ($state) => $state ? '<img src="' . asset('storage/' . $state) . '" style="height:40px;max-width:80px;object-fit:contain;border-radius:4px;" />' : '-')
+                    ->formatStateUsing(fn ($state) => $state ? '<img src="' . asset('storage/' . $state) . '" style="height:40px;width:40px;object-fit:cover;border-radius:50%;" />' : '-')
                     ->html(),
+
 
 
             ])

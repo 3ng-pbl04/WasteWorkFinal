@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Postingan;
 use App\Models\Berita;
-use App\Models\Ulasan;
-use App\Models\PageSetting;
 use App\Models\Mitra;
+use App\Models\PageSetting;
+use App\Models\Postingan;
+use App\Models\Ulasan;
+use Illuminate\Http\Request;
 
 class PostinganController extends Controller
 {
@@ -20,16 +20,14 @@ class PostinganController extends Controller
         $page_settings = PageSetting::first();
         $mitras = Mitra::latest()->take(5)->get();
 
-        // ✅ Tambahkan berita terbaru untuk sidebar atau tampilan lainnya
-        $beritaTerbaru = Berita::latest('tanggal')->take(5)->get();
 
         return view('welcome', compact(
             'postingans',
             'beritas',
             'ulasans',
             'page_settings',
-            'mitras',
-            'beritaTerbaru'
+            'mitras'
+
         ));
     }
 
@@ -39,11 +37,11 @@ class PostinganController extends Controller
         $berita = Berita::with('admin')->findOrFail($id);
         $page_settings = PageSetting::first();
 
-        // ✅ Ambil 5 berita terbaru lainnya, kecuali yang sedang dibuka
+        // Ambil 2 berita terbaru lainnya, kecuali yang sedang dibuka
         $beritaTerbaru = Berita::where('id', '!=', $id)
-            ->latest('tanggal')
-            ->take(5)
-            ->get();
+                            ->latest('tanggal')
+                            ->take(2)
+                            ->get();
 
         return view('berita.detailberita1', compact(
             'berita',
