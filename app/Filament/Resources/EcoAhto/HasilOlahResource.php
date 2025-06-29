@@ -18,15 +18,24 @@ class HasilOlahResource extends Resource
     protected static ?string $model = HasilOlah::class;
     protected static ?string $navigationGroup = 'Manajemen';
     protected static ?string $navigationLabel = 'Hasil Olah';
+    protected static ?string $pluralModelLabel = 'Hasil Olah';
     protected static ?string $navigationIcon = 'heroicon-o-sparkles';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-              Forms\Components\TextInput::make('nama')->required(),
-                 Forms\Components\TextInput::make('bahan')->required(),
-                  Forms\Components\TextInput::make('warna')->required(),
+              Forms\Components\TextInput::make('nama')
+                ->placeholder('Masukkan Nama Hasil Olah')
+                ->required(),
+
+              Forms\Components\TextInput::make('bahan')
+                ->placeholder('Masukkan Bahan Hasil Olah')
+                ->required(),
+
+              Forms\Components\TextInput::make('warna')
+                ->placeholder('Masukkan Warna Hasil Olah')
+                ->required(),
             ]);
     }
 
@@ -35,10 +44,20 @@ class HasilOlahResource extends Resource
         return $table
             ->columns([
 
-            Tables\Columns\TextColumn::make('id'),
-            Tables\Columns\TextColumn::make('nama'),
-            Tables\Columns\TextColumn::make('bahan'),
-            Tables\Columns\TextColumn::make('warna'),
+            Tables\Columns\TextColumn::make('id')
+                ->sortable()
+                ->searchable(),
+
+            Tables\Columns\TextColumn::make('nama')
+                ->sortable()
+                ->searchable(),
+                
+            Tables\Columns\TextColumn::make('bahan')
+                ->searchable(),
+                
+            Tables\Columns\TextColumn::make('warna')
+                ->searchable(),
+                
             ])
             ->filters([
                 //

@@ -9,7 +9,6 @@ use App\Filament\EcoAhto\Widgets\RecentSampahTable;
 use App\Filament\EcoAhto\Widgets\SampahMasukChart;
 use App\Filament\Pages\Trash2Move\Auth\LoginCustom;
 use App\Filament\Pages\Trash2Move\Auth\LoginCustomeco;
-use App\Models\Admin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -23,7 +22,6 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-
 class EcoAhtoAdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel

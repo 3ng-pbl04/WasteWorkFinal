@@ -29,19 +29,24 @@ class MitraResource extends Resource
     {
         return $form->schema([
             TextInput::make('nama')
+                ->placeholder('Masukkan Nama Mitra')
                 ->required()
                 ->maxLength(255),
 
             TextInput::make('kontak')
+                ->tel()
+                ->placeholder('Masukkan Kontak Mitra')
                 ->required()
                 ->maxLength(255),
 
             TextInput::make('email')
+                ->placeholder('Masukkan Email Mitra')
                 ->required()
                 ->email()
                 ->maxLength(255),
 
             Textarea::make('alamat')
+                ->placeholder('Masukkan Alamat Mitra')
                 ->required()
                 ->maxLength(500),
 
@@ -77,7 +82,8 @@ class MitraResource extends Resource
 
                 TextColumn::make('kontak'),
 
-                TextColumn::make('email'),
+                TextColumn::make('email')
+                    ->searchable(),
 
                 TextColumn::make('alamat')
                     ->limit(30),

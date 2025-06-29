@@ -43,9 +43,7 @@ class PengaduanController extends Controller
         $pengaduan = Pengaduan::create($validatedData);
 
         // 5. Kirim email konfirmasi
-        // Pastikan sudah import: use Illuminate\Support\Facades\Mail;
-        // dan class Mailable PengaduanTerkirim sudah ada dan di-import: use App\Mail\PengaduanTerkirim;
-
+        Mail::to($validatedData['email'])->send(new PengaduanTerkirim($pengaduan));
         // 6. Redirect kembali dengan pesan sukses
         return back()->with('success', 'Pengaduan berhasil dikirim. Silakan cek email Anda.');
     }

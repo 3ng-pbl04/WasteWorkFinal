@@ -19,33 +19,35 @@ class BeritaResource extends Resource
 
     public static function form(Forms\Form $form): Forms\Form
     {
-        return $form
-        ->schema([
-    Forms\Components\TextInput::make('judul')
-        ->required()
-        ->label('Judul Berita')
-        ->maxLength(255),
+            return $form
+            ->schema([
+        Forms\Components\TextInput::make('judul')
+            ->placeholder('Masukkan Judul Berita')
+            ->required()
+            ->label('Judul Berita')
+            ->maxLength(255),
 
-    Forms\Components\DatePicker::make('tanggal')
-        ->required()
-        ->label('Tanggal Berita'),
+        Forms\Components\DatePicker::make('tanggal')
+            ->required()
+            ->label('Tanggal Berita'),
 
-    Forms\Components\Textarea::make('deskripsi')
-        ->required()
-        ->label('Deskripsi')
-        ->rows(5),
+        Forms\Components\Textarea::make('deskripsi')
+            ->placeholder('Masukkan Deskripsi Berita')   
+            ->required()
+            ->label('Deskripsi')
+            ->rows(5),
 
-    Forms\Components\FileUpload::make('gambar')
-        ->label('Gambar Berita')
-        ->directory('berita')
-        ->disk('public')
-        ->image()
-        ->imagePreviewHeight('150')
-        ->downloadable()
-        ->openable()
-        ->preserveFilenames()
-        ->visibility('public'),
-        ]);
+        Forms\Components\FileUpload::make('gambar')
+            ->label('Gambar Berita')
+            ->directory('berita')
+            ->disk('public')
+            ->image()
+            ->imagePreviewHeight('150')
+            ->downloadable()
+            ->openable()
+            ->preserveFilenames()
+            ->visibility('public'),
+            ]);
 
     }
 
@@ -53,15 +55,29 @@ class BeritaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('judul')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('tanggal')->date(),
-                Tables\Columns\ImageColumn::make('gambar')->label('Gambar')->circular(),
-                 Tables\Columns\TextColumn::make('admin.name')  // ini yang tampilkan username admin
-                ->label('Admin Pembuat')
-                ->sortable()
-                ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')->since()->label('Diposting'),
+                Tables\Columns\TextColumn::make('id')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('judul')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('tanggal')
+                    ->date(),
+
+                Tables\Columns\ImageColumn::make('gambar')
+                    ->label('Gambar')
+                    ->circular(),
+
+                 Tables\Columns\TextColumn::make('admin.name')
+                    ->label('Admin Pembuat')
+                    ->sortable()
+                    ->searchable(),
+                    
+                Tables\Columns\TextColumn::make('created_at')
+                    ->since()
+                    ->label('Diposting'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

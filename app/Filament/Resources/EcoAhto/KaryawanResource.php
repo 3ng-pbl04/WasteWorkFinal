@@ -21,15 +21,29 @@ class KaryawanResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationGroup = 'Manajemen';
     protected static ?string $navigationLabel = 'Karyawan';
+    protected static ?string $pluralModelLabel = 'Karyawan';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nama')->required(),
-                 Forms\Components\TextInput::make('email')->required(),
-                  Forms\Components\TextInput::make('notelp')->required(),
-                   Forms\Components\TextArea::make('alamat')->required(),
+                Forms\Components\TextInput::make('nama')
+                    ->placeholder('Masukkan Nama Karyawan')
+                    ->required(),
+
+                Forms\Components\TextInput::make('email')
+                    ->placeholder('Masukkan Email Karyawan')
+                    ->required(),
+
+                Forms\Components\TextInput::make('notelp')
+                    ->tel()
+                    ->placeholder('Masukkan Nomor Telepon Karyawan')
+                    ->label('Nomor Telepon')
+                    ->required(),
+
+                Forms\Components\TextArea::make('alamat')
+                    ->placeholder('Masukkan Alamat Karyawan')
+                    ->required(),
             ]);
     }
 
@@ -37,10 +51,22 @@ class KaryawanResource extends Resource
     {
         return $table
             ->columns([
-            Tables\Columns\TextColumn::make('nama'),
-            Tables\Columns\TextColumn::make('email'),
-            Tables\Columns\TextColumn::make('notelp'),
-            Tables\Columns\TextColumn::make('alamat'),
+            Tables\Columns\TextColumn::make('id')
+                ->sortable()
+                ->searchable(),
+
+            Tables\Columns\TextColumn::make('nama')
+                ->sortable()
+                ->searchable(),
+
+            Tables\Columns\TextColumn::make('email')
+                ->searchable(),
+
+            Tables\Columns\TextColumn::make('notelp')
+                ->searchable(),
+
+            Tables\Columns\TextColumn::make('alamat')
+                ->searchable(),
             ])
             ->filters([
                 //

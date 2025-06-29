@@ -33,8 +33,15 @@ class PengaduanResource extends Resource
                 ->maxLength(255),
 
             TextInput::make('no_telp')
+                ->tel()
+                ->required()
+                ->maxLength(20),
+            TextInput::make('email')
+
                 ->required()
                 ->maxLength(255),
+            TextInput::make('email')
+                ->required(),
 
             Textarea::make('alamat')
                 ->required(),
@@ -89,14 +96,31 @@ class PengaduanResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            TextColumn::make('id')->sortable()->searchable(),
-            TextColumn::make('nama')->sortable()->searchable(),
-            TextColumn::make('no_telp'),
-            TextColumn::make('email'),
-            TextColumn::make('alamat')->limit(30),
-            Tables\Columns\ImageColumn::make('foto')->label('Gambar')->circular(),
+            TextColumn::make('id')
+                ->sortable()
+                ->searchable(),
+                
+            TextColumn::make('nama')
+                ->sortable()    
+                ->searchable(),
+                
+            TextColumn::make('no_telp')
+                ->searchable(),
+
+            TextColumn::make('email')
+                ->searchable(),
+
+            TextColumn::make('alamat')
+                ->limit(30),
+
+            Tables\Columns\ImageColumn::make('foto')
+                ->label('Gambar')
+                ->circular(),
+
             TextColumn::make('keterangan')->limit(50),
+            
             TextColumn::make('titik_koordinat'),
+
             TextColumn::make('status')
                 ->badge()
                 ->colors([
@@ -105,6 +129,7 @@ class PengaduanResource extends Resource
                     'success' => 'Diterima',
                     'primary' => 'Dijadwalkan',
                 ]),
+
             TextColumn::make('created_at')
                 ->dateTime('d/m/Y H:i')
                 ->label('Dibuat'),

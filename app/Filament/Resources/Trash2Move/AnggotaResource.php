@@ -20,20 +20,29 @@ class AnggotaResource extends Resource
     {
         return $form->schema([
             Forms\Components\TextInput::make('nama')
+                ->placeholder('Masukkan Nama Anggota')
                 ->required()
                 ->maxLength(255),
+
             Forms\Components\TextInput::make('email')
+                ->placeholder('Masukkan Email Anggota')
                 ->required()
                 ->email()
                 ->maxLength(255),
+
             Forms\Components\TextInput::make('no_telp')
-                ->label('No. Telepon')
+                ->tel()
+                ->placeholder('Masukkan Nomor Telepon Anggota')
+                ->label('Nomor Telepon')
                 ->required()
                 ->maxLength(20),
+
             Forms\Components\DatePicker::make('tanggal_bergabung')
                 ->required()
                 ->label('Tanggal Bergabung'),
+
             Forms\Components\Textarea::make('alamat')
+                ->placeholder('Masukkan Alamat Anggota')
                 ->required()
                 ->rows(3),
         ]);
@@ -43,11 +52,24 @@ class AnggotaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('nama')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('email')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('no_telp')->label('Telepon'),
-                Tables\Columns\TextColumn::make('tanggal_bergabung')->date()->label('Bergabung'),
+                Tables\Columns\TextColumn::make('id')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('nama')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('no_telp')
+                    ->searchable()
+                    ->label('Nomor Telepon'),
+
+                Tables\Columns\TextColumn::make('tanggal_bergabung')   
+                    ->date()
+                    ->label('Tanggal Bergabung'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

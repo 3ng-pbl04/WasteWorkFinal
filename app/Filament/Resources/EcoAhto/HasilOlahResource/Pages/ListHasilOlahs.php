@@ -16,20 +16,6 @@ class ListHasilOlahs extends ListRecords
             Actions\CreateAction::make()
                 ->label('Tambah Data')
                 ->icon('heroicon-o-plus'),
-
-            Actions\Action::make('Export Excel')
-                ->label('Export Excel')
-                ->icon('heroicon-o-table-cells')
-                ->color('success')
-                ->url(route('export.hasilolah.excel'))
-                ->openUrlInNewTab(),
-
-            Actions\Action::make('Export PDF')
-                ->label('Export PDF')
-                ->icon('heroicon-o-document-text')
-                ->color('danger')
-                ->url(route('export.hasilolah.pdf'))
-                ->openUrlInNewTab(),
         ];
     }
 }

@@ -229,7 +229,7 @@ img {
 .button {
     -webkit-text-size-adjust: none;
     border-radius: 4px;
-    color: #fff;
+    color: #52d48c;
     display: inline-block;
     overflow: hidden;
     text-decoration: none;
@@ -237,7 +237,7 @@ img {
 
 .button-blue,
 .button-primary {
-    background-color: #2d3748;
+    background-color: #1e4fa5;
     border-bottom: 8px solid #2d3748;
     border-left: 18px solid #2d3748;
     border-right: 18px solid #2d3748;

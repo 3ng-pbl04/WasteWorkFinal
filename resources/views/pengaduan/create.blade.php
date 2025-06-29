@@ -5,6 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Pengaduan | TRASH2MOVE</title>
 
+    <!-- Auto-refresh CSRF token script -->
+    <script>
+        // Refresh CSRF token setiap 30 menit
+        function refreshCsrfToken() {
+            fetch('/refresh-csrf')
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelectorAll('input[name="_token"]').forEach(input => {
+                        input.value = data.token;
+                    });
+                })
+                .catch(error => console.error('Error refreshing CSRF token:', error));
+        }
+
+        // Jalankan pertama kali dan set interval
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshCsrfToken();
+            setInterval(refreshCsrfToken, 1800000); // 30 menit
+        });
+    </script>
+
     <!-- Tailwind CSS v4 -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
 
@@ -177,6 +198,9 @@
             <!-- Form Body -->
             <form action="{{ route('pengaduan.store') }}" method="POST" enctype="multipart/form-data" class="p-6 md:p-8 space-y-6">
                 @csrf
+                
+                <!-- Backup CSRF Token -->
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                 <!-- Section 1: Personal Information -->
                 <div class="space-y-6">
@@ -394,7 +418,6 @@
                         <i class="fas fa-envelope text-primary-400"></i>
                         <span>info@trash2move.id</span>
                     </li>
-
                 </ul>
             </div>
 
@@ -423,7 +446,7 @@
 
 <script>
     // Initialize map
-    var map = L.map('map').setView([-6.2088, 106.8456], 13);
+    var map = L.map('map').setView([-0.9472, 100.3544], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap',
         maxZoom: 18,
@@ -552,7 +575,6 @@
             });
         })
         .catch(error => console.error('Error loading data:', error));
-
 </script>
 
 </body>

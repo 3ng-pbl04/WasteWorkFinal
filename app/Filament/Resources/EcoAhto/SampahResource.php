@@ -20,11 +20,27 @@ class SampahResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('jenis_sampah')->required(),
-                Forms\Components\TextInput::make('warna')->required(),
-                Forms\Components\TextInput::make('berat')->numeric()->required()->suffix('kg'),
-                Forms\Components\DatePicker::make('tanggal_masuk')->required(),
-                Forms\Components\TextInput::make('sumber')->required(),
+                Forms\Components\TextInput::make('jenis_sampah')
+                    ->placeholder("Masukkan Jenis sampah")
+                    ->required(),
+
+                Forms\Components\TextInput::make('warna')
+                    ->placeholder("Masukkan Warna sampah")
+                    ->required(),
+
+                Forms\Components\TextInput::make('berat')
+                    ->placeholder("Masukkan Berat sampah")
+                    ->numeric()
+                    ->required()
+                    ->suffix('kg'),
+
+                Forms\Components\DatePicker::make('tanggal_masuk')
+                    ->required(),
+
+                Forms\Components\TextInput::make('sumber')
+                    ->placeholder("Masukkan Asal/Sumber sampah")
+                    ->required(),
+
                 Forms\Components\Select::make('status')
                     ->required()
                     ->options([
@@ -42,11 +58,25 @@ class SampahResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('jenis_sampah')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('id')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('jenis_sampah')
+                    ->sortable()
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('warna'),
-                Tables\Columns\TextColumn::make('berat')->suffix(' kg'),
-                Tables\Columns\TextColumn::make('tanggal_masuk')->date(),
+
+                Tables\Columns\TextColumn::make('berat')
+                    ->sortable()
+                    ->suffix(' kg'),
+
+                Tables\Columns\TextColumn::make('tanggal_masuk')
+                    ->date(),
+
                 Tables\Columns\TextColumn::make('sumber'),
+                
                 Tables\Columns\TextColumn::make('status')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
