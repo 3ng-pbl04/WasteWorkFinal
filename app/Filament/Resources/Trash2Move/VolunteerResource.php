@@ -2,14 +2,15 @@
 
 namespace App\Filament\Resources\Trash2Move;
 
-use App\Filament\Resources\Trash2Move\VolunteerResource\Pages;
-use App\Models\Volunteer;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
+use App\Models\Volunteer;
 use Filament\Tables\Table;
+use Filament\Facades\Filament;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\Trash2Move\VolunteerResource\Pages;
 
 class VolunteerResource extends Resource
 {
@@ -39,10 +40,6 @@ class VolunteerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->sortable()
-                    ->searchable(),
-
                 Tables\Columns\TextColumn::make('nama')
                     ->sortable()
                     ->searchable(),
@@ -74,5 +71,10 @@ class VolunteerResource extends Resource
             'create' => Pages\CreateVolunteer::route('/create'),
             'edit' => Pages\EditVolunteer::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return Filament::auth()->user()?->role === 'trash2move';
     }
 }

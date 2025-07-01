@@ -15,7 +15,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Filament\Pages\Dashboard;
+use App\Filament\Pages\Trash2Move\Dashboard;
 
 use App\Filament\Trash2Move\Widgets\ProdukOverview;
 use App\Filament\Trash2Move\Widgets\PengaduanTerbaru;

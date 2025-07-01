@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources\EcoAhto;
 
-use App\Filament\Resources\EcoAhto\KaryawanResource\Pages;
-use App\Filament\Resources\EcoAhto\KaryawanResource\RelationManagers;
-use App\Models\Karyawan;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Karyawan;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Facades\Filament;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\EcoAhto\KaryawanResource\Pages;
+use App\Filament\Resources\EcoAhto\KaryawanResource\RelationManagers;
 
 class KaryawanResource extends Resource
 {
@@ -51,10 +52,6 @@ class KaryawanResource extends Resource
     {
         return $table
             ->columns([
-            Tables\Columns\TextColumn::make('id')
-                ->sortable()
-                ->searchable(),
-
             Tables\Columns\TextColumn::make('nama')
                 ->sortable()
                 ->searchable(),
@@ -96,5 +93,9 @@ class KaryawanResource extends Resource
             'create' => Pages\CreateKaryawan::route('/create'),
             'edit' => Pages\EditKaryawan::route('/{record}/edit'),
         ];
+    }
+    public static function canAccess(): bool
+    {
+        return Filament::auth()->user()?->role === 'ecoahto';
     }
 }

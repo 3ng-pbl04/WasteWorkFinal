@@ -5,7 +5,6 @@ namespace App\Filament\Pages\Trash2Move\Auth;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Auth\Login;
-use Filament\Pages\Page;
 
 class LoginCustom extends Login
 {
@@ -23,6 +22,7 @@ class LoginCustom extends Login
             ),
         ];
     }
+
     protected function getLoginFormComponent(): Component
     {
         return TextInput::make('login')
@@ -35,11 +35,16 @@ class LoginCustom extends Login
 
     protected function getCredentialsFromFormData(array $data): array
     {
-        $login_type = filter_var(value: $data['login'], filter: FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $login_type = filter_var($data['login'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
         return [
             $login_type => $data['login'],
             'password' => $data['password'],
         ];
     }
 
+    protected function getAuthGuard(): string
+    {
+        return 'trash'; // sesuai config guard yang kamu buat
+    }
 }

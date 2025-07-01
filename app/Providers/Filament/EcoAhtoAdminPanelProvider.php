@@ -8,12 +8,11 @@ use App\Filament\EcoAhto\Widgets\EcoAhtoOverview;
 use App\Filament\EcoAhto\Widgets\RecentSampahTable;
 use App\Filament\EcoAhto\Widgets\SampahMasukChart;
 use App\Filament\Pages\Trash2Move\Auth\LoginCustom;
-use App\Filament\Pages\Trash2Move\Auth\LoginCustomeco;
+use App\Filament\Pages\Ecoahto\Auth\LoginCustomeco;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -22,6 +21,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Pages\EcoAhto\Dashboard;
+
 class EcoAhtoAdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -34,17 +35,14 @@ class EcoAhtoAdminPanelProvider extends PanelProvider
             ->authGuard('eco')
             ->discoverResources(app_path('Filament/Resources/EcoAhto'), 'App\\Filament\\Resources\\EcoAhto')
             ->discoverPages(app_path('Filament/Pages/EcoAhto'), 'App\\Filament\\Pages\\EcoAhto')
-            // ->discoverWidgets(in: app_path('Filament/EcoAhto/Widgets'), for: 'App\\Filament\\EcoAhto\\Widgets')
             ->widgets([
-            SampahMasukChart::make(),
-            EcoAhtoOverview::make(),
-            RecentSampahTable::make(),
-])
-
+                SampahMasukChart::make(),
+                EcoAhtoOverview::make(),
+                RecentSampahTable::make(),
+            ])
             ->pages([
-    Dashboard::class,
-])
-
+                Dashboard::class,
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

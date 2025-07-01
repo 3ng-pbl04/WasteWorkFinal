@@ -14,7 +14,15 @@ class Admin extends Authenticatable implements FilamentUser, HasAvatar
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->role === $panel->getId();
+        return match ($panel->getId()) {
+            // Panel Trash2Move hanya untuk role ceoT2m & trash2move
+            'trash2move' => in_array($this->role, ['ceoT2m', 'trash2move']),
+
+            // Panel Ecoahto hanya untuk role ceoEco & ecoahto
+            'ecoahto'    => in_array($this->role, ['ceoEco', 'ecoahto']),
+
+            default      => false, 
+        };
     }
 
     public function getFilamentAvatarUrl(): ?string

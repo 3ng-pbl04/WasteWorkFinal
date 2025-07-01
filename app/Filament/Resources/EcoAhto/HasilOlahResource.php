@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources\EcoAhto;
 
-use App\Filament\Resources\EcoAhto\HasilOlahResource\Pages;
-use App\Filament\Resources\EcoAhto\HasilOlahResource\RelationManagers;
-use App\Models\HasilOlah;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
+use App\Models\HasilOlah;
 use Filament\Tables\Table;
+use Filament\Facades\Filament;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\EcoAhto\HasilOlahResource\Pages;
+use App\Filament\Resources\EcoAhto\HasilOlahResource\RelationManagers;
 
 class HasilOlahResource extends Resource
 {
@@ -43,11 +44,6 @@ class HasilOlahResource extends Resource
     {
         return $table
             ->columns([
-
-            Tables\Columns\TextColumn::make('id')
-                ->sortable()
-                ->searchable(),
-
             Tables\Columns\TextColumn::make('nama')
                 ->sortable()
                 ->searchable(),
@@ -87,5 +83,9 @@ class HasilOlahResource extends Resource
             'create' => Pages\CreateHasilOlah::route('/create'),
             'edit' => Pages\EditHasilOlah::route('/{record}/edit'),
         ];
+    }
+    public static function canAccess(): bool
+    {
+        return Filament::auth()->user()?->role === 'ecoahto';
     }
 }

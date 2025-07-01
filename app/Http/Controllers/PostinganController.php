@@ -6,6 +6,7 @@ use App\Models\Berita;
 use App\Models\Mitra;
 use App\Models\PageSetting;
 use App\Models\Postingan;
+use App\Models\Sampah;
 use App\Models\Ulasan;
 use Illuminate\Http\Request;
 
@@ -20,14 +21,27 @@ class PostinganController extends Controller
         $page_settings = PageSetting::first();
         $mitras = Mitra::latest()->take(5)->get();
 
+        // Hitung total berat sampah
+        $totalBeratKg = Sampah::sum('berat'); // Pastikan kolom 'berat' dalam kg
+        $jumlahSampah = $totalBeratKg >= 1000
+            ? number_format($totalBeratKg / 1000, 1) . ' Ton'
+            : number_format($totalBeratKg, 0) . ' Kg';
+
+        // Hitung total produk dan komunitas
+        $jumlahProduk = Postingan::count();
+        $jumlahKomunitas = Mitra::count();
+        $jumlahPohon = 10000; // statis
 
         return view('welcome', compact(
             'postingans',
             'beritas',
             'ulasans',
             'page_settings',
-            'mitras'
-
+            'mitras',
+            'jumlahSampah',
+            'jumlahProduk',
+            'jumlahKomunitas',
+            'jumlahPohon'
         ));
     }
 
@@ -57,17 +71,16 @@ class PostinganController extends Controller
             'nama' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'harga' => 'nullable|string|max:50',
+            'kategori' => 'required|string',
             'rating' => 'nullable|string|max:10',
             'link' => 'nullable|url|max:255',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        // Simpan file gambar jika ada
         if ($request->hasFile('foto')) {
             $validatedData['gambar'] = $request->file('foto')->store('postingans', 'public');
         }
 
-        // Simpan data ke database
         Postingan::create($validatedData);
 
         return redirect()->back()->with('success', 'Postingan berhasil disimpan!');

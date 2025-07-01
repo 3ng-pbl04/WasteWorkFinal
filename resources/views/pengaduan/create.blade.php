@@ -7,7 +7,6 @@
 
     <!-- Auto-refresh CSRF token script -->
     <script>
-        // Refresh CSRF token setiap 30 menit
         function refreshCsrfToken() {
             fetch('/refresh-csrf')
                 .then(response => response.json())
@@ -19,10 +18,9 @@
                 .catch(error => console.error('Error refreshing CSRF token:', error));
         }
 
-        // Jalankan pertama kali dan set interval
         document.addEventListener('DOMContentLoaded', function() {
             refreshCsrfToken();
-            setInterval(refreshCsrfToken, 1800000); // 30 menit
+            setInterval(refreshCsrfToken, 1800000);
         });
     </script>
 
@@ -85,50 +83,16 @@
             border-color: #22c55e;
             background-color: #f0fdf4;
         }
+
+        #map {
+            height: 400px; /* pastikan ada tinggi tetap */
+            z-index: 0;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans antialiased">
 
-<!-- Header -->
-<header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-        <div class="flex items-center space-x-3">
-            <img src="/images/LOGO.png" alt="TRASH2MOVE Logo" class="h-10 w-10">
-            <span class="text-xl font-bold text-primary-700">TRASH2MOVE</span>
-        </div>
-
-        <!-- Mobile Menu Button -->
-        <button id="mobile-menu-button" class="md:hidden text-gray-700">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-        </button>
-
-        <!-- Desktop Navigation -->
-        <nav class="hidden md:block">
-            <ul class="flex space-x-6 items-center">
-                <li><a href="#" class="text-gray-600 hover:text-primary-600 transition">Beranda</a></li>
-                <li><a href="#" class="text-gray-600 hover:text-primary-600 transition">Tentang Kami</a></li>
-                <li><a href="#" class="text-gray-600 hover:text-primary-600 transition">Produk</a></li>
-                <li><a href="#" class="text-gray-600 hover:text-primary-600 transition">Berita</a></li>
-                <li><a href="#" class="text-gray-600 hover:text-primary-600 transition">Kontak</a></li>
-                <li><a href="#" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition">Login</a></li>
-            </ul>
-        </nav>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-        <div class="container mx-auto px-4 py-3 space-y-3">
-            <a href="#" class="block py-2 text-gray-600 hover:text-primary-600">Beranda</a>
-            <a href="#" class="block py-2 text-gray-600 hover:text-primary-600">Tentang Kami</a>
-            <a href="#" class="block py-2 text-gray-600 hover:text-primary-600">Produk</a>
-            <a href="#" class="block py-2 text-gray-600 hover:text-primary-600">Berita</a>
-            <a href="#" class="block py-2 text-gray-600 hover:text-primary-600">Kontak</a>
-            <a href="#" class="block bg-primary-600 text-white px-4 py-2 rounded-lg text-center">Login</a>
-        </div>
-    </div>
-</header>
+@include('tampilan.header')
 
 <!-- Hero Section -->
 <section class="hero-bg min-h-[40vh] flex items-center justify-center text-white">
@@ -151,10 +115,8 @@
     <div class="container mx-auto px-4">
         <div class="max-w-3xl mx-auto py-6">
             <div class="flex items-center justify-between relative">
-                <!-- Progress line -->
                 <div class="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 -translate-y-1/2 z-0"></div>
 
-                <!-- Step 1 - Active -->
                 <div class="flex flex-col items-center relative z-10">
                     <div class="w-8 h-8 rounded-full bg-primary-600 text-white flex items-center justify-center mb-2">
                         <span class="text-sm font-medium">1</span>
@@ -162,7 +124,6 @@
                     <span class="text-sm font-medium text-primary-600">Data Diri</span>
                 </div>
 
-                <!-- Step 2 -->
                 <div class="flex flex-col items-center relative z-10">
                     <div class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center mb-2">
                         <span class="text-sm font-medium">2</span>
@@ -170,7 +131,6 @@
                     <span class="text-sm font-medium text-gray-500">Detail Pengaduan</span>
                 </div>
 
-                <!-- Step 3 -->
                 <div class="flex flex-col items-center relative z-10">
                     <div class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center mb-2">
                         <span class="text-sm font-medium">3</span>
@@ -184,6 +144,7 @@
 
 <!-- Main Form -->
 <main class="container mx-auto px-4 py-8 md:py-12">
+    <main class="container mx-auto px-4 py-8 md:py-12">
     <div class="max-w-4xl mx-auto">
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
             <!-- Form Header -->
@@ -198,7 +159,7 @@
             <!-- Form Body -->
             <form action="{{ route('pengaduan.store') }}" method="POST" enctype="multipart/form-data" class="p-6 md:p-8 space-y-6">
                 @csrf
-                
+
                 <!-- Backup CSRF Token -->
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -312,28 +273,29 @@
                     </div>
 
                     <!-- Location Picker -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Lokasi Kejadian <span class="text-red-500">*</span></label>
-                        <div class="space-y-3">
-                            <div id="map" class="rounded-lg border border-gray-300"></div>
-                            <div id="location-info" class="bg-gray-50 p-3 rounded-lg hidden">
-                                <div class="flex items-start gap-3">
-                                    <div class="flex-shrink-0 mt-0.5">
-                                        <i class="fas fa-map-marker-alt text-primary-600"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-800">Lokasi dipilih:</p>
-                                        <p id="koordinat-terpilih" class="text-sm text-gray-600"></p>
-                                        <p id="address-display" class="text-sm text-gray-600 mt-1"></p>
-                                    </div>
+                    <div id="map" class="rounded-lg border border-gray-300 mt-6" style="height: 400px;"></div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Lokasi Kejadian <span class="text-red-500">*</span></label>
+                    <div class="space-y-3">
+                        <div id="map" class="rounded-lg border border-gray-300" style="height: 400px;"></div>
+                        <div id="location-info" class="bg-gray-50 p-3 rounded-lg hidden">
+                            <div class="flex items-start gap-3">
+                                <div class="flex-shrink-0 mt-0.5">
+                                    <i class="fas fa-map-marker-alt text-primary-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-800">Lokasi dipilih:</p>
+                                    <p id="koordinat-terpilih" class="text-sm text-gray-600"></p>
+                                    <p id="address-display" class="text-sm text-gray-600 mt-1"></p>
                                 </div>
                             </div>
-                            <input type="hidden" name="titik_koordinat" id="titik_koordinat">
-                            <input type="hidden" name="latitude" id="latitude">
-                            <input type="hidden" name="longitude" id="longitude">
-                            <p class="text-xs text-gray-500">Klik pada peta untuk memilih lokasi kejadian. Geser dan zoom untuk menemukan lokasi yang tepat.</p>
                         </div>
+                        <input type="hidden" name="titik_koordinat" id="titik_koordinat">
+                        <input type="hidden" name="latitude" id="latitude">
+                        <input type="hidden" name="longitude" id="longitude">
+                        <p class="text-xs text-gray-500">Klik pada peta untuk memilih lokasi kejadian. Geser dan zoom untuk menemukan lokasi yang tepat.</p>
                     </div>
+                </div>
+
                 </div>
 
                 <!-- Form Actions -->
@@ -362,205 +324,131 @@
         </div>
     </div>
 </main>
+</main>
 
-<!-- Footer -->
-<footer class="bg-gray-800 text-white pt-12 pb-6">
-    <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-            <!-- About Section -->
-            <div>
-                <div class="flex items-center gap-3 mb-4">
-                    <img src="/images/LOGO.png" alt="Trash2Move Logo" class="h-10 w-10">
-                    <h3 class="text-xl font-bold">Trash2Move</h3>
-                </div>
-                <p class="text-gray-400 mb-4">Mengubah limbah menjadi produk bernilai tinggi sambil membangun komunitas yang sadar lingkungan.</p>
-                <div class="flex space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-facebook-f text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-instagram text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-twitter text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-youtube text-xl"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Quick Links -->
-            <div>
-                <h4 class="text-lg font-semibold mb-4 border-b border-primary-500 pb-2">Tautan Cepat</h4>
-                <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">Beranda</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">Tentang Kami</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">Produk</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">Layanan</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">Kontak</a></li>
-                </ul>
-            </div>
-
-            <!-- Contact Info -->
-            <div>
-                <h4 class="text-lg font-semibold mb-4 border-b border-primary-500 pb-2">Hubungi Kami</h4>
-                <ul class="space-y-3 text-gray-400">
-                    <li class="flex items-start gap-3">
-                        <i class="fas fa-map-marker-alt mt-1 text-primary-400"></i>
-                        <span>Jl. Hijau Lestari No.123, Jakarta Selatan</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <i class="fas fa-phone text-primary-400"></i>
-                        <span>+62 21 1234 5678</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <i class="fas fa-envelope text-primary-400"></i>
-                        <span>info@trash2move.id</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Newsletter -->
-            <div>
-                <h4 class="text-lg font-semibold mb-4 border-b border-primary-500 pb-2">Newsletter</h4>
-                <p class="text-gray-400 mb-3">Berlangganan untuk mendapatkan informasi terbaru tentang program kami.</p>
-                <form class="flex">
-                    <input type="email" placeholder="Email Anda" class="px-4 py-2 rounded-l-lg focus:outline-none text-gray-800 w-full">
-                    <button type="submit" class="bg-primary-600 hover:bg-primary-700 px-4 py-2 rounded-r-lg">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Copyright -->
-        <div class="pt-6 border-t border-gray-700 text-center text-gray-400">
-            <p>&copy; 2025 Trash2Move. All rights reserved.</p>
-        </div>
-    </div>
-</footer>
+@include('tampilan.footer', ['page_settings' => $page_settings])
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <script>
-    // Initialize map
-    var map = L.map('map').setView([-0.9472, 100.3544], 13);
+    let map = L.map('map').setView([-0.9472, 100.3544], 13);
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap',
         maxZoom: 18,
     }).addTo(map);
 
-    // Handle map click
-    var marker;
+    let marker;
+
+    // Tampilkan marker jika data sudah ada (misal saat form kembali karena error)
+    const latInput = document.getElementById('latitude').value;
+    const lngInput = document.getElementById('longitude').value;
+
+    if (latInput && lngInput) {
+        const lat = parseFloat(latInput);
+        const lng = parseFloat(lngInput);
+
+        marker = L.marker([lat, lng]).addTo(map);
+        map.setView([lat, lng], 16);
+
+        document.getElementById('location-info').classList.remove('hidden');
+        document.getElementById('koordinat-terpilih').innerText = `Koordinat: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+
+        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('address-display').innerText = data.display_name || "Lokasi tidak ditemukan";
+            })
+            .catch(() => {
+                document.getElementById('address-display').innerText = "Alamat tidak tersedia";
+            });
+    }
+
+    // Handle klik peta
     map.on('click', function (e) {
-        if (marker) {
-            map.removeLayer(marker);
-        }
+        if (marker) map.removeLayer(marker);
         marker = L.marker(e.latlng).addTo(map);
 
         const lat = e.latlng.lat.toFixed(6);
         const lng = e.latlng.lng.toFixed(6);
+
         document.getElementById('latitude').value = lat;
         document.getElementById('longitude').value = lng;
         document.getElementById('titik_koordinat').value = `${lat}, ${lng}`;
 
-        // Show location info box
         document.getElementById('location-info').classList.remove('hidden');
         document.getElementById('koordinat-terpilih').innerText = `Koordinat: ${lat}, ${lng}`;
 
-        // Get location name from Nominatim (reverse geocoding)
         fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
             .then(response => response.json())
             .then(data => {
-                const displayName = data.display_name || "Lokasi tidak ditemukan";
-                document.getElementById('address-display').innerText = displayName;
+                document.getElementById('address-display').innerText = data.display_name || "Lokasi tidak ditemukan";
             })
-            .catch(error => {
-                console.error('Gagal mengambil nama lokasi:', error);
+            .catch(() => {
                 document.getElementById('address-display').innerText = "Alamat tidak tersedia";
             });
     });
 
-    // File upload handling
+    // Perbaiki ukuran map setelah halaman render sepenuhnya
+    document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 200);
+    });
+
     const dropzone = document.getElementById('dropzone');
     const fileInput = document.getElementById('foto');
     const previewContainer = document.getElementById('preview-container');
     const preview = document.getElementById('previewFoto');
     const removeButton = document.getElementById('remove-photo');
 
-    // Handle click on dropzone
     dropzone.addEventListener('click', () => fileInput.click());
 
-    // Handle file selection
-    fileInput.addEventListener('change', function() {
+    fileInput.addEventListener('change', function () {
         const file = this.files[0];
-        if (file) {
-            if (file.size > 5 * 1024 * 1024) {
-                alert('Ukuran file terlalu besar. Maksimal 5MB.');
-                return;
-            }
-
+        if (file && file.size <= 5 * 1024 * 1024) {
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = e => {
                 preview.src = e.target.result;
                 previewContainer.classList.remove('hidden');
                 dropzone.classList.add('hidden');
-            }
+            };
             reader.readAsDataURL(file);
+        } else {
+            alert('Ukuran file terlalu besar. Maksimal 5MB.');
         }
     });
 
-    // Handle drag and drop
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        dropzone.addEventListener(eventName, preventDefaults, false);
+        dropzone.addEventListener(eventName, e => {
+            e.preventDefault();
+            e.stopPropagation();
+        }, false);
     });
 
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-
     ['dragenter', 'dragover'].forEach(eventName => {
-        dropzone.addEventListener(eventName, highlight, false);
+        dropzone.classList.add('active');
     });
 
     ['dragleave', 'drop'].forEach(eventName => {
-        dropzone.addEventListener(eventName, unhighlight, false);
+        dropzone.classList.remove('active');
     });
 
-    function highlight() {
-        dropzone.classList.add('active');
-    }
+    dropzone.addEventListener('drop', e => {
+        fileInput.files = e.dataTransfer.files;
+        fileInput.dispatchEvent(new Event('change'));
+    });
 
-    function unhighlight() {
-        dropzone.classList.remove('active');
-    }
-
-    dropzone.addEventListener('drop', handleDrop, false);
-
-    function handleDrop(e) {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        fileInput.files = files;
-
-        const event = new Event('change');
-        fileInput.dispatchEvent(event);
-    }
-
-    // Remove photo
-    removeButton.addEventListener('click', function() {
+    removeButton.addEventListener('click', () => {
         fileInput.value = '';
         preview.src = '#';
         previewContainer.classList.add('hidden');
         dropzone.classList.remove('hidden');
     });
 
-    // Mobile menu toggle
-    document.getElementById('mobile-menu-button').addEventListener('click', function() {
-        const menu = document.getElementById('mobile-menu');
-        menu.classList.toggle('hidden');
+    document.getElementById('mobile-menu-button')?.addEventListener('click', () => {
+        document.getElementById('mobile-menu')?.classList.toggle('hidden');
     });
 </script>
 

@@ -2,11 +2,12 @@
 
 namespace App\Filament\Resources\EcoAhto;
 
-use App\Filament\Resources\EcoAhto\SampahResource\Pages;
-use App\Models\Sampah;
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Sampah;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
+use App\Filament\Resources\EcoAhto\SampahResource\Pages;
 
 class SampahResource extends Resource
 {
@@ -58,10 +59,6 @@ class SampahResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->sortable()
-                    ->searchable(),
-
                 Tables\Columns\TextColumn::make('jenis_sampah')
                     ->sortable()
                     ->searchable(),
@@ -106,5 +103,9 @@ class SampahResource extends Resource
             'create' => Pages\CreateSampah::route('/create'),
             'edit' => Pages\EditSampah::route('/{record}/edit'),
         ];
+    }
+    public static function canAccess(): bool
+    {
+        return Filament::auth()->user()?->role === 'ecoahto';
     }
 }

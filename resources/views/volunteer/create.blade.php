@@ -23,57 +23,33 @@
             background-color: #eff6ff;
             box-shadow: 0 0 0 2px #bfdbfe;
         }
+            .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/sampah.jpg');
+            background-size: cover;
+            background-position: center;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans antialiased">
-    <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center">
-                <img src="/images/LOGO.png" alt="TRASH2MOVE Logo" class="h-12 w-auto mr-3">
-                <h1 class="text-xl font-bold text-gray-800">TRASH2MOVE</h1>
-            </div>
 
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-button" class="md:hidden text-gray-700">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+@include('tampilan.header')
 
-            <!-- Navigation -->
-            <nav id="mobile-menu" class="hidden md:block w-full md:w-auto">
-                <ul class="flex flex-col md:flex-row items-center gap-4 md:gap-6 py-4 md:py-0">
-                    <li><a href="#home" class="text-gray-700 hover:text-blue-600 transition-colors">Beranda</a></li>
-                    <li><a href="#company" class="text-gray-700 hover:text-blue-600 transition-colors">Tentang Kami</a></li>
-                    <li><a href="#products" class="text-gray-700 hover:text-blue-600 transition-colors">Produk</a></li>
-                    <li><a href="#news" class="text-gray-700 hover:text-blue-600 transition-colors">Berita</a></li>
-                    <li><a href="#testimonials" class="text-gray-700 hover:text-blue-600 transition-colors">Ulasan</a></li>
-                    <li><a href="#contact" class="text-gray-700 hover:text-blue-600 transition-colors">Kontak</a></li>
-                    <li><a href="#login" class="text-gray-700 hover:text-blue-600 transition-colors">Login</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
     <!-- Hero Section -->
-    <section id="home" class="relative bg-cover bg-center py-20 md:py-32" style="background-image: url('/images/sampah.jpg')">
-        <div class="absolute inset-0 bg-black/50"></div>
-        <div class="container mx-auto px-4 relative z-10 text-center">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Ubah Sampah Menjadi Solusi</h2>
-            <p class="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-                Misi kami adalah mendaur ulang limbah menjadi produk berkualitas tinggi yang tidak hanya ramah lingkungan tetapi juga fungsional dan estetis.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="/" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-                    Kembali ke Beranda
-                </a>
-                <a href="/pengaduan/create" class="bg-white/10 hover:bg-white/20 backdrop-blur-sm border-2 border-white text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-                      <i class="fas fa-hands"></i> Ajukan Aksi
-                </a>
-            </div>
+   <section class="hero-bg min-h-[40vh] flex items-center justify-center text-white">
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Formulir Pengaduan</h1>
+        <p class="text-lg max-w-2xl mx-auto mb-6">Laporkan masalah lingkungan di sekitar Anda dan bantu kami menciptakan lingkungan yang lebih bersih dan sehat.</p>
+        <div class="flex flex-wrap justify-center gap-3">
+            <a href="/" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-5 rounded-lg transition">
+                <i class="fas fa-arrow-left"></i> Kembali ke Beranda
+            </a>
+            <a href="{{ route('pengaduan.create') }}" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white font-medium py-2 px-5 rounded-lg transition border border-white">
+                <i class="fas fa-hands"></i> Ajukan Aksi
+            </a>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Divider -->
     <div class="border-t border-gray-200/50 my-6"></div>
@@ -162,91 +138,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-12">
-        <div class="container mx-auto px-4 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-                <!-- About Section -->
-                <div>
-                    <div class="flex items-center mb-4">
-                        <img src="/images/LOGO.png" alt="Trash2Move Logo" class="h-10 w-auto mr-3">
-                        <h2 class="text-xl font-bold">Trash2Move</h2>
-                    </div>
-                    <p class="text-gray-300 mb-4">
-                        Trash2Move adalah perusahaan daur ulang inovatif yang mendedikasikan diri untuk mengubah limbah menjadi produk bernilai tinggi sambil membangun komunitas yang sadar lingkungan.
-                    </p>
-                    <div class="flex gap-3">
-                        <a href="#" class="w-9 h-9 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Products Section -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-12 after:h-0.5 after:bg-blue-500">
-                        Produk
-                    </h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Furniture</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Aksesori</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Kemasan</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Dekorasi</a></li>
-                    </ul>
-                </div>
-
-                <!-- Company Section -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-12 after:h-0.5 after:bg-blue-500">
-                        Perusahaan
-                    </h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Tentang Kami</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Tim</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Karir</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Blog</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Section -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-12 after:h-0.5 after:bg-blue-500">
-                        Kontak
-                    </h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li class="flex items-start gap-2">
-                            <i class="fas fa-map-marker-alt mt-1 text-blue-400"></i>
-                            <span>Jl. Hijau Lestari No.123, Jakarta Selatan</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-phone text-blue-400"></i>
-                            <span>+62 21 1234 5678</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-envelope text-blue-400"></i>
-                            <span>info@trash2move.id</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <i class="fas fa-clock text-blue-400"></i>
-                            <span>Senin-Jumat: 08.00-17.00</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
-                &copy; 2025 Trash2Move. Hak Cipta Dilindungi.
-            </div>
-        </div>
-    </footer>
+    @include('tampilan.footer')
 
     <script>
         // Toggle mobile menu

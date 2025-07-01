@@ -1,12 +1,13 @@
 <?php
 namespace App\Filament\Resources\Trash2Move;
 
-use App\Filament\Resources\Trash2Move\AnggotaResource\Pages;
-use App\Models\Anggota;
 use Filament\Forms;
 use Filament\Tables;
-use Filament\Tables\Actions\CreateAction;
+use App\Models\Anggota;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\CreateAction;
+use App\Filament\Resources\Trash2Move\AnggotaResource\Pages;
 
 class AnggotaResource extends Resource
 {
@@ -52,10 +53,6 @@ class AnggotaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->sortable()
-                    ->searchable(),
-
                 Tables\Columns\TextColumn::make('nama')
                     ->sortable()
                     ->searchable(),
@@ -97,5 +94,10 @@ class AnggotaResource extends Resource
                     redirect(static::getUrl('index'))->send();
                 }),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return Filament::auth()->user()?->role === 'trash2move';
     }
 }

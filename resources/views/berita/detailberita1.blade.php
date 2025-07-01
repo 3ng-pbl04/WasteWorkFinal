@@ -52,52 +52,14 @@
     </style>
 </head>
 <body class="bg-gray-50 font-sans antialiased">
+
     <!-- Header -->
-    <header class="sticky top-0 z-50 bg-white shadow-sm">
-        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <img src="{{ asset('storage/' . $page_settings->company_logo) }}" alt="Logo" class="h-10">
-                <h1 class="text-xl font-bold text-gray-800">{{ $page_settings->company_name ?? 'Trash2Move' }}</h1>
-            </div>
-            <nav class="hidden md:block">
-                <ul class="flex space-x-8">
-                    <li><a href="#home" class="text-gray-600 hover:text-primary-600 transition">Beranda</a></li>
-                    <li><a href="#company" class="text-gray-600 hover:text-primary-600 transition">Tentang Kami</a></li>
-                    <li><a href="#products" class="text-gray-600 hover:text-primary-600 transition">Produk</a></li>
-                    <li><a href="#news" class="text-gray-600 hover:text-primary-600 transition">Berita</a></li>
-                    <li><a href="#testimonials" class="text-gray-600 hover:text-primary-600 transition">Ulasan</a></li>
-                    <li><a href="#contact" class="text-gray-600 hover:text-primary-600 transition">Kontak</a></li>
-                    <li><a href="{{ route('login') }}" class="text-primary-600 font-medium">Login</a></li>
-                </ul>
-            </nav>
-            <button class="md:hidden text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-        </div>
-    </header>
+    @include('tampilan.header')
 
-    <!-- Hero Section -->
-    <section id="home" class="relative py-20 md:py-28 bg-cover bg-center"
-             style="background-image: url('{{ $page_settings->hero_image ? asset('storage/' . $page_settings->hero_image) : asset('images/sampah.jpg') }}')">
-        <div class="absolute inset-0 bg-black/50"></div>
-        <div class="container mx-auto px-4 relative z-10 text-center text-white">
-            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{{ $page_settings->hero_title ?? 'Bersama Menjaga Lingkungan' }}</h2>
-            <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">{{ $page_settings->hero_description ?? 'Mari berkolaborasi untuk menciptakan dunia yang lebih bersih dan berkelanjutan' }}</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="/" class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition duration-300">
-                    <i class="fas fa-home mr-2"></i> Kembali Ke Beranda
-                </a>
-                <a href="/volunteer/create" class="inline-flex items-center justify-center px-6 py-3 bg-white hover:bg-gray-100 text-gray-800 font-medium rounded-lg transition duration-300">
-                    <i class="fas fa-hands-helping mr-2"></i> Jadi Volunteer
-                </a>
-            </div>
-        </div>
-    </section>
 
+    <div class="bg-gray-100 min-h-screen pt-6">
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-12">
+    <main class="container mx-auto px-4 py-12 bg-white rounded-t-3xl shadow-xl mb-20">
         <div class="flex flex-col lg:flex-row gap-8">
             <!-- Article Content -->
             <article class="lg:w-2/3">
@@ -158,8 +120,6 @@
                             @if (!empty($berita->subjudul))
                                 <h2 class="text-xl md:text-2xl font-semibold text-gray-800 mt-8 mb-4">{{ $berita->subjudul }}</h2>
                             @endif
-
-                            <!-- Additional content can be added here -->
                         </div>
                     </div>
                 </div>
@@ -174,30 +134,29 @@
 
                         <form id="comment-form" method="POST" action="{{ route('ulasan.store') }}" class="space-y-4">
                             @csrf
-
                             <div>
                                 <label for="comment-name" class="block text-sm font-medium text-gray-700 mb-1">Nama</label>
                                 <input type="text" id="comment-name" name="nama"
-                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition"
-                                       placeholder="Masukkan nama Anda" required>
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition"
+                                    placeholder="Masukkan nama Anda" required>
                             </div>
 
                             <div>
                                 <label for="comment-role" class="block text-sm font-medium text-gray-700 mb-1">Peran</label>
                                 <input type="text" id="comment-role" name="peran"
-                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition"
-                                       placeholder="Masukkan peran Anda (misalnya, Pelanggan, Volunteer, dll.)" required>
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition"
+                                    placeholder="Masukkan peran Anda (misalnya, Pelanggan, Volunteer, dll.)" required>
                             </div>
 
                             <div>
                                 <label for="comment-text" class="block text-sm font-medium text-gray-700 mb-1">Komentar</label>
                                 <textarea id="comment-text" name="deskripsi" rows="4"
-                                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition"
-                                          placeholder="Tulis komentar Anda di sini..." required></textarea>
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition"
+                                    placeholder="Tulis komentar Anda di sini..." required></textarea>
                             </div>
 
                             <button type="submit"
-                                    class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition duration-300">
+                                class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition duration-300">
                                 Kirim Komentar
                             </button>
                         </form>
@@ -225,51 +184,46 @@
                 </div>
 
                 <!-- Recent News Widget -->
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-        <div class="p-6 md:p-8">
-            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                <i class="far fa-newspaper mr-2 text-primary-600"></i>
-                Berita Terbaru
-            </h3>
-            <div class="space-y-4">
-                <!-- Menampilkan berita terbaru dari database -->
-                @forelse($beritaTerbaru as $news)
-                    <div class="flex items-start space-x-3">
-                        <!-- Gambar berita -->
-                        <div class="flex-shrink-0 w-20 h-16 overflow-hidden rounded-lg">
-                            <img src="{{ asset('storage/' . $news->gambar) }}"
-                                alt="{{ $news->judul }}"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <!-- Judul dan tanggal berita -->
-                        <div>
-                            <h4 class="text-sm font-semibold text-gray-800 hover:text-primary-600 transition">
-                                <a href="{{ route('berita.show', $news->id) }}">{{ $news->judul }}</a>
-                            </h4>
-                            <p class="text-xs text-gray-500">
-                                {{ \Carbon\Carbon::parse($news->tanggal)->translatedFormat('d F Y') }}
-                            </p>
-                        </div>
-                    </div>
-                @empty
-                    <!-- Tampilkan pesan jika tidak ada berita -->
-                    <p class="text-sm text-gray-500">Tidak ada berita terbaru</p>
-                @endforelse
-            </div>
-
-        <!-- Tautan "Lihat Semua" jika ada berita -->
-        @if($beritaTerbaru->count() > 0)
-            <div class="mt-4 text-right">
-                <a href="{{ route('berita.index') }}" class="text-sm text-primary-600 hover:text-primary-700 font-medium">
-                    Lihat Semua Berita <i class="fas fa-arrow-right ml-1"></i>
-                </a>
-            </div>
-        @endif
-    </div>
-</div>
-
-                <!-- Newsletter Widget -->
                 <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6 md:p-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="far fa-newspaper mr-2 text-primary-600"></i>
+                            Berita Terbaru
+                        </h3>
+                        <div class="space-y-4">
+                            @forelse($beritaTerbaru as $news)
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0 w-20 h-16 overflow-hidden rounded-lg">
+                                        <img src="{{ asset('storage/' . $news->gambar) }}"
+                                            alt="{{ $news->judul }}"
+                                            class="w-full h-full object-cover">
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-gray-800 hover:text-primary-600 transition">
+                                            <a href="{{ route('berita.show', $news->id) }}">{{ $news->judul }}</a>
+                                        </h4>
+                                        <p class="text-xs text-gray-500">
+                                            {{ \Carbon\Carbon::parse($news->tanggal)->translatedFormat('d F Y') }}
+                                        </p>
+                                    </div>
+                                </div>
+                            @empty
+                                <p class="text-sm text-gray-500">Tidak ada berita terbaru</p>
+                            @endforelse
+                        </div>
+
+                        @if($beritaTerbaru->count() > 0)
+                            <div class="mt-4 text-right">
+                                <a href="{{ route('berita.index') }}" class="text-sm text-primary-600 hover:text-primary-700 font-medium">
+                                    Lihat Semua Berita <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- info Widget -->
+               <div class="bg-white rounded-xl shadow-md overflow-hidden">
                 <div class="p-6 md:p-8">
                     <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
                         <i class="fas fa-chart-line mr-2 text-primary-600"></i>
@@ -277,117 +231,33 @@
                     </h3>
                     <div class="grid grid-cols-2 gap-4 text-center">
                         <div class="bg-primary-50 p-4 rounded-lg">
-                            <div class="text-3xl font-bold text-primary-600">15K+</div>
-                            <div class="text-sm text-gray-600 mt-1">Ton Sampah Didaur Ulang</div>
+                            <div class="text-3xl font-bold text-primary-600">{{ $jumlahSampah }}</div>
+                            <div class="text-sm text-gray-600 mt-1">Sampah Didaur Ulang</div>
                         </div>
                         <div class="bg-green-50 p-4 rounded-lg">
-                            <div class="text-3xl font-bold text-green-600">500+</div>
+                            <div class="text-3xl font-bold text-green-600">{{ number_format($jumlahProduk) }}+</div>
                             <div class="text-sm text-gray-600 mt-1">Produk Inovatif</div>
                         </div>
                         <div class="bg-yellow-50 p-4 rounded-lg">
-                            <div class="text-3xl font-bold text-yellow-600">250+</div>
+                            <div class="text-3xl font-bold text-yellow-600">{{ number_format($jumlahKomunitas) }}+</div>
                             <div class="text-sm text-gray-600 mt-1">Komunitas Terlibat</div>
                         </div>
                         <div class="bg-purple-50 p-4 rounded-lg">
-                            <div class="text-3xl font-bold text-purple-600">10K+</div>
+                            <div class="text-3xl font-bold text-purple-600">{{ number_format($jumlahKomunitas) }}+</div>
                             <div class="text-sm text-gray-600 mt-1">Pohon Ditanam</div>
                         </div>
                     </div>
                 </div>
             </div>
+
             </aside>
         </div>
     </main>
+</div>
+
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white pt-12 pb-6">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-                <!-- About Column -->
-                <div>
-                    <div class="flex items-center space-x-3 mb-4">
-                        <img src="{{ asset('storage/' . $page_settings->company_logo) }}" alt="Logo" class="h-10">
-                        <h3 class="text-xl font-bold gradient-text">{{ $page_settings->company_name ?? 'Trash2Move' }}</h3>
-                    </div>
-                    <p class="text-gray-300 mb-4">
-                        {{ $page_settings->footer_text ?? 'Trash2Move adalah perusahaan daur ulang inovatif yang mendedikasikan diri untuk mengubah limbah menjadi produk bernilai tinggi.' }}
-                    </p>
-                    <div class="flex space-x-4">
-                        @if ($page_settings->facebook_link)
-                            <a href="{{ $page_settings->facebook_link }}" class="text-gray-300 hover:text-white transition" target="_blank">
-                                <i class="fab fa-facebook-f text-lg"></i>
-                            </a>
-                        @endif
-                        @if ($page_settings->instagram_link)
-                            <a href="{{ $page_settings->instagram_link }}" class="text-gray-300 hover:text-white transition" target="_blank">
-                                <i class="fab fa-instagram text-lg"></i>
-                            </a>
-                        @endif
-                        @if ($page_settings->twitter_link)
-                            <a href="{{ $page_settings->twitter_link }}" class="text-gray-300 hover:text-white transition" target="_blank">
-                                <i class="fab fa-twitter text-lg"></i>
-                            </a>
-                        @endif
-                        @if ($page_settings->youtube_link)
-                            <a href="{{ $page_settings->youtube_link }}" class="text-gray-300 hover:text-white transition" target="_blank">
-                                <i class="fab fa-youtube text-lg"></i>
-                            </a>
-                        @endif
-                        @if ($page_settings->tiktok_link)
-                            <a href="{{ $page_settings->tiktok_link }}" class="text-gray-300 hover:text-white transition" target="_blank">
-                                <i class="fab fa-tiktok text-lg"></i>
-                            </a>
-                        @endif
-                    </div>
-                </div>
-
-                <!-- Products Column -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Produk</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Furniture</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Aksesori</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Kemasan</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Dekorasi</a></li>
-                    </ul>
-                </div>
-
-                <!-- Company Column -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Perusahaan</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Tentang Kami</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Tim</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Karir</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Blog</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Column -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Kontak</h4>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary-400"></i>
-                            <span class="text-gray-300">Jl. Hijau Lestari No.123, Jakarta Selatan</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone-alt mr-3 text-primary-400"></i>
-                            <span class="text-gray-300">+62 21 1234 5678</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-3 text-primary-400"></i>
-                            <span class="text-gray-300">info@ecorecycle.id</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-700 pt-6 text-center text-gray-400 text-sm">
-                &copy; 2025 {{ $page_settings->company_name ?? 'Trash2Move' }}. Hak Cipta Dilindungi.
-            </div>
-        </div>
-    </footer>
+    @include('tampilan.footer')
 
     <!-- Back to Top Button -->
     <button id="back-to-top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary-600 text-white shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300">

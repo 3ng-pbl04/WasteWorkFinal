@@ -2,19 +2,21 @@
 
 namespace App\Filament\Resources\Trash2Move;
 
-use App\Filament\Resources\Trash2Move\MitraResource\Pages;
 use App\Models\Mitra;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\Trash2Move\MitraResource\Pages;
 
 class MitraResource extends Resource
 {
@@ -72,10 +74,6 @@ class MitraResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->searchable()
-                    ->sortable(),
-
                 TextColumn::make('nama')
                     ->searchable()
                     ->sortable(),
@@ -106,6 +104,7 @@ class MitraResource extends Resource
             ])
             ->defaultSort('id', 'desc')
             ->actions([
+                ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make(),
             ])
@@ -126,5 +125,10 @@ class MitraResource extends Resource
             'create' => Pages\CreateMitra::route('/create'),
             'edit' => Pages\EditMitra::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return Filament::auth()->user()?->role === 'trash2move';
     }
 }

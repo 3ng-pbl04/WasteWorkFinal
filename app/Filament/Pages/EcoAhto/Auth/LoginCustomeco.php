@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages\Trash2Move\Auth;
+namespace App\Filament\Pages\EcoAhto\Auth;
 
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;

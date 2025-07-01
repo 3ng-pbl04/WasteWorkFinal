@@ -18,14 +18,15 @@ class PengaduanController extends Controller
     {
         // 1. Validasi input
         $validatedData = $request->validate([
-            'nama'       => 'required|string|max:255',
-            'no_telp'    => 'required|string|max:20',
-            'email'      => 'required|email:dns|max:255',
-            'alamat'     => 'required|string',
+            'nama' => 'required|string|max:255',
+            'no_telp' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'alamat' => 'required|string',
             'keterangan' => 'required|string',
-            'foto'       => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'latitude'   => 'nullable|numeric',
-            'longitude'  => 'nullable|numeric',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'titik_koordinat' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
 
         // 2. Simpan file foto jika ada
@@ -44,6 +45,7 @@ class PengaduanController extends Controller
 
         // 5. Kirim email konfirmasi
         Mail::to($validatedData['email'])->send(new PengaduanTerkirim($pengaduan));
+
         // 6. Redirect kembali dengan pesan sukses
         return back()->with('success', 'Pengaduan berhasil dikirim. Silakan cek email Anda.');
     }

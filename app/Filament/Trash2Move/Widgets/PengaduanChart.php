@@ -29,10 +29,10 @@ class PengaduanChart extends ChartWidget
         $cumulative = 0;
 
         foreach ($dates as $date) {
-            // Hitung berapa volunteer yang ditambahkan pada tanggal ini
+            if ($date === null) continue; // Cegah error "Illegal operator"
+
             $added = Volunteer::whereDate('created_at', $date)->count();
 
-            // Hitung berapa volunteer yang keluar (soft delete) pada tanggal ini
             $removed = Volunteer::onlyTrashed()
                 ->whereDate('deleted_at', $date)
                 ->count();
@@ -43,13 +43,13 @@ class PengaduanChart extends ChartWidget
             $labels[] = $date;
             $cumulativeData[] = $cumulative;
 
-            // Hitung total volunteer (termasuk yang sudah dihapus) sampai tanggal ini
             $total = Volunteer::whereDate('created_at', '<=', $date)
                 ->where(function ($query) use ($date) {
                     $query->whereNull('deleted_at')
-                          ->orWhereDate('deleted_at', '>', $date);
+                        ->orWhereDate('deleted_at', '>', $date);
                 })
                 ->count();
+
             $totalData[] = $total;
         }
 

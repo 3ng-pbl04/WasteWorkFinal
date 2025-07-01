@@ -9,16 +9,18 @@ class Pengaduan extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nama',
-        'no_telp',
-        'email',
-        'alamat',
-        'keterangan',
-        'foto',
-        'titik_koordinat',
-        'status',
-        'catatan_admin',
-    ];
-    
+  protected $fillable = [
+    'nama',
+    'no_telp',
+    'email',
+    'alamat',
+    'keterangan',
+    'foto',
+    'titik_koordinat',
+    'latitude',
+    'longitude',
+    'status',
+    'catatan_admin',
+];
+
 }

@@ -2,13 +2,14 @@
 
 namespace App\Filament\Resources\Trash2Move;
 
-use App\Filament\Resources\Trash2Move\UlasanResource\Pages;
-use App\Models\Ulasan;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables\Table;
 use Filament\Tables;
+use App\Models\Ulasan;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use Filament\Facades\Filament;
+use Filament\Resources\Resource;
+use App\Filament\Resources\Trash2Move\UlasanResource\Pages;
 
 class UlasanResource extends Resource
 {
@@ -37,7 +38,6 @@ class UlasanResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('nama')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('peran')->sortable(),
                 Tables\Columns\TextColumn::make('komentar')->limit(50),
@@ -60,5 +60,10 @@ class UlasanResource extends Resource
             //'create' => Pages\CreateUlasan::route('/create'),
             //'edit' => Pages\EditUlasan::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return Filament::auth()->user()?->role === 'trash2move';
     }
 }

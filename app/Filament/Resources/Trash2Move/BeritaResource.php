@@ -1,12 +1,13 @@
 <?php
 namespace App\Filament\Resources\Trash2Move;
 
-use App\Filament\Resources\Trash2Move\BeritaResource\Pages;
-use App\Models\Berita;
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Berita;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\Trash2Move\BeritaResource\Pages;
 
 class BeritaResource extends Resource
 {
@@ -55,10 +56,6 @@ class BeritaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->sortable()
-                    ->searchable(),
-
                 Tables\Columns\TextColumn::make('judul')
                     ->searchable()
                     ->sortable(),
@@ -80,6 +77,7 @@ class BeritaResource extends Resource
                     ->label('Diposting'),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -96,5 +94,10 @@ class BeritaResource extends Resource
             'create' => Pages\CreateBerita::route('/create'),
             'edit' => Pages\EditBerita::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return Filament::auth()->user()?->role === 'trash2move';
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Trash2Move;
 
 use App\Models\PageSetting;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Filament\Navigation\NavigationItem;
 use App\Filament\Resources\Trash2Move\PageSettingResource\Pages;
@@ -48,6 +49,11 @@ class PageSettingResource extends Resource
             'about' => Pages\AboutPageSetting::route('/about/{record}/edit'),
             'footer' => Pages\FooterPageSetting::route('/footer/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return Filament::auth()->user()?->role === 'trash2move';
     }
 
     public static function getBreadcrumbs(): array

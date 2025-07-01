@@ -16,7 +16,7 @@ return new class extends Migration
         $table->string('username')->unique();
         $table->string('email')->unique()->nullable();
         $table->string('password');
-        $table->enum('role', ['trash2move', 'ecoahto']);
+        $table->enum('role', ['trash2move', 'ecoahto','ceoT2m','ecoEco']);
         $table->timestamps();
     });
 }
