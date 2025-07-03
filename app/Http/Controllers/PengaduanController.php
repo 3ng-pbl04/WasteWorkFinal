@@ -19,7 +19,7 @@ class PengaduanController extends Controller
         // 1. Validasi input
         $validatedData = $request->validate([
             'nama' => 'required|string|max:255',
-            'no_telp' => 'required|string|max:20',
+            'no_telp' => 'required|regex:/^(\+?\d{9,15})$/',
             'email' => 'required|email|max:255',
             'alamat' => 'required|string',
             'keterangan' => 'required|string',
@@ -47,7 +47,8 @@ class PengaduanController extends Controller
         Mail::to($validatedData['email'])->send(new PengaduanTerkirim($pengaduan));
 
         // 6. Redirect kembali dengan pesan sukses
-        return back()->with('success', 'Pengaduan berhasil dikirim. Silakan cek email Anda.');
+        return redirect('/')->with('success', 'Pengaduan berhasil dikirim. Silakan cek email Anda.');
+
     }
 
     public function updateStatus(Request $request, $id)

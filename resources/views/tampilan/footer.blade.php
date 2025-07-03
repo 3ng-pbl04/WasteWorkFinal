@@ -72,10 +72,10 @@
             <div>
                 <h4 class="text-lg font-semibold mb-4 border-b border-primary-500 pb-2">Tautan Cepat</h4>
                 <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">Beranda</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">Tentang Kami</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">Produk</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">Layanan</a></li>
+                    <li><a href="{{ url('/') }}" class="text-gray-400 hover:text-white transition">Beranda</a></li>
+                    <li><a href="{{ url('/#company') }}" class="text-gray-400 hover:text-white transition">Tentang Kami</a></li>
+                    <li><a href="{{ url('/#products') }}" class="text-gray-400 hover:text-white transition">Produk</a></li>
+                    <li><a href="{{ url('/#news') }}" class="text-gray-400 hover:text-white transition">Berita</a></li>
                 </ul>
             </div>
 
@@ -83,10 +83,10 @@
             <div>
                 <h4 class="text-lg font-semibold mb-4 border-b border-primary-500 pb-2">Produk</h4>
                     <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">Furniture</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">Aksesoris</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">Kemasan</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition">Dekorasi</a></li>
+                    <li><a href="#products" class="text-gray-400 hover:text-white transition" data-filter="kursi">Kursi</a></li>
+                    <li><a href="#products" class="text-gray-400 hover:text-white transition" data-filter="kursi">Meja</a></li>
+                    <li><a href="#products" class="text-gray-400 hover:text-white transition" data-filter="ganci">Ganci</a></li>
+                    <li><a href="#products" class="text-gray-400 hover:text-white transition" data-filter="kursi">Aksesoris</a></li>
                 </ul>
             </div>
 
@@ -275,6 +275,57 @@
         });
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const productCards = document.querySelectorAll('.product-card');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const footerLinks = document.querySelectorAll('.footer-filter');
+
+        function filterProduk(kategori) {
+            productCards.forEach(card => {
+                const cardKategori = card.dataset.kategori;
+                if (kategori === 'semua' || cardKategori === kategori) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Update tampilan tombol
+            filterButtons.forEach(btn => {
+                btn.classList.remove('bg-green-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'hover:bg-gray-300');
+                if (btn.dataset.filter === kategori) {
+                    btn.classList.add('bg-green-600', 'text-white');
+                    btn.classList.remove('bg-gray-200');
+                }
+            });
+        }
+
+        // Event dari tombol filter atas
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                const kategori = this.dataset.filter;
+                filterProduk(kategori);
+            });
+        });
+
+        // Event dari link footer
+        footerLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const kategori = this.dataset.filter;
+                filterProduk(kategori);
+
+                // Scroll ke section produk
+                const section = document.getElementById('products');
+                section.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    });
+</script>
+
 
 </body>
 </html>

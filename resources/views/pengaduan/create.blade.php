@@ -84,9 +84,18 @@
             background-color: #f0fdf4;
         }
 
+        html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        }
+
         #map {
-            height: 400px; /* pastikan ada tinggi tetap */
-            z-index: 0;
+            z-index: 0 !important;
+        }
+
+        .leaflet-container {
+            z-index: 0 !important;
         }
     </style>
 </head>
@@ -144,7 +153,6 @@
 
 <!-- Main Form -->
 <main class="container mx-auto px-4 py-8 md:py-12">
-    <main class="container mx-auto px-4 py-8 md:py-12">
     <div class="max-w-4xl mx-auto">
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
             <!-- Form Header -->
@@ -186,17 +194,23 @@
                     <!-- Contact Info Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Phone Field -->
-                        <div>
-                            <label for="no_telp" class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon <span class="text-red-500">*</span></label>
+                                                <div>
+                            <label for="no_telp" class="block text-sm font-medium text-gray-700 mb-1">
+                                Nomor Telepon <span class="text-red-500">*</span>
+                            </label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-phone text-gray-400"></i>
                                 </div>
                                 <input type="tel" name="no_telp" id="no_telp" required
-                                       class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                                       placeholder="Contoh: 08123456789">
+                                    pattern="^\+?62\d{8,13}$|^0\d{9,13}$"
+                                    oninvalid="this.setCustomValidity('Masukkan nomor yang valid. Contoh: 08123456789 atau +628123456789')"
+                                    oninput="this.setCustomValidity('')"
+                                    class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                    placeholder="Contoh: 08123456789 atau +628123456789">
                             </div>
                         </div>
+
 
                         <!-- Email Field -->
                         <div>
@@ -273,32 +287,32 @@
                     </div>
 
                     <!-- Location Picker -->
-                    <div id="map" class="rounded-lg border border-gray-300 mt-6" style="height: 400px;"></div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Lokasi Kejadian <span class="text-red-500">*</span></label>
-                    <div class="space-y-3">
-                        <div id="map" class="rounded-lg border border-gray-300" style="height: 400px;"></div>
-                        <div id="location-info" class="bg-gray-50 p-3 rounded-lg hidden">
-                            <div class="flex items-start gap-3">
-                                <div class="flex-shrink-0 mt-0.5">
-                                    <i class="fas fa-map-marker-alt text-primary-600"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm font-medium text-gray-800">Lokasi dipilih:</p>
-                                    <p id="koordinat-terpilih" class="text-sm text-gray-600"></p>
-                                    <p id="address-display" class="text-sm text-gray-600 mt-1"></p>
-                                </div>
-                            </div>
+            <label class="block text-sm font-medium text-gray-700 mb-1 mt-6">Lokasi Kejadian <span class="text-red-500">*</span></label>
+            <div class="space-y-3">
+                <div id="map" class="rounded-lg border border-gray-300" style="height: 400px;"></div>
+
+                <div id="location-info" class="bg-gray-50 p-3 rounded-lg hidden">
+                    <div class="flex items-start gap-3">
+                        <div class="flex-shrink-0 mt-0.5">
+                            <i class="fas fa-map-marker-alt text-primary-600"></i>
                         </div>
-                        <input type="hidden" name="titik_koordinat" id="titik_koordinat">
-                        <input type="hidden" name="latitude" id="latitude">
-                        <input type="hidden" name="longitude" id="longitude">
-                        <p class="text-xs text-gray-500">Klik pada peta untuk memilih lokasi kejadian. Geser dan zoom untuk menemukan lokasi yang tepat.</p>
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">Lokasi dipilih:</p>
+                            <p id="koordinat-terpilih" class="text-sm text-gray-600"></p>
+                            <p id="address-display" class="text-sm text-gray-600 mt-1"></p>
+                        </div>
                     </div>
                 </div>
 
-                </div>
+                <input type="hidden" name="titik_koordinat" id="titik_koordinat">
+                <input type="hidden" name="latitude" id="latitude">
+                <input type="hidden" name="longitude" id="longitude">
 
-                <!-- Form Actions -->
+                <p class="text-xs text-gray-500">Klik pada peta untuk memilih lokasi kejadian. Geser dan zoom untuk menemukan lokasi yang tepat.</p>
+            </div>
+
+
+                            <!-- Form Actions -->
                 <div class="pt-6 flex flex-col-reverse sm:flex-row justify-end gap-3">
                     <button type="reset" class="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
                         <i class="fas fa-undo mr-2"></i> Reset Form
@@ -324,133 +338,133 @@
         </div>
     </div>
 </main>
-</main>
+
 
 @include('tampilan.footer', ['page_settings' => $page_settings])
+
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <script>
-    let map = L.map('map').setView([-0.9472, 100.3544], 13);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap',
-        maxZoom: 18,
-    }).addTo(map);
-
-    let marker;
-
-    // Tampilkan marker jika data sudah ada (misal saat form kembali karena error)
-    const latInput = document.getElementById('latitude').value;
-    const lngInput = document.getElementById('longitude').value;
-
-    if (latInput && lngInput) {
-        const lat = parseFloat(latInput);
-        const lng = parseFloat(lngInput);
-
-        marker = L.marker([lat, lng]).addTo(map);
-        map.setView([lat, lng], 16);
-
-        document.getElementById('location-info').classList.remove('hidden');
-        document.getElementById('koordinat-terpilih').innerText = `Koordinat: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-
-        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('address-display').innerText = data.display_name || "Lokasi tidak ditemukan";
-            })
-            .catch(() => {
-                document.getElementById('address-display').innerText = "Alamat tidak tersedia";
-            });
-    }
-
-    // Handle klik peta
-    map.on('click', function (e) {
-        if (marker) map.removeLayer(marker);
-        marker = L.marker(e.latlng).addTo(map);
-
-        const lat = e.latlng.lat.toFixed(6);
-        const lng = e.latlng.lng.toFixed(6);
-
-        document.getElementById('latitude').value = lat;
-        document.getElementById('longitude').value = lng;
-        document.getElementById('titik_koordinat').value = `${lat}, ${lng}`;
-
-        document.getElementById('location-info').classList.remove('hidden');
-        document.getElementById('koordinat-terpilih').innerText = `Koordinat: ${lat}, ${lng}`;
-
-        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('address-display').innerText = data.display_name || "Lokasi tidak ditemukan";
-            })
-            .catch(() => {
-                document.getElementById('address-display').innerText = "Alamat tidak tersedia";
-            });
-    });
-
-    // Perbaiki ukuran map setelah halaman render sepenuhnya
     document.addEventListener('DOMContentLoaded', function () {
+        // Inisialisasi peta
+        const map = L.map('map').setView([-0.9472, 100.3544], 13);
+        let marker;
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap',
+            maxZoom: 18,
+        }).addTo(map);
+
+        const latInput = document.getElementById('latitude');
+        const lngInput = document.getElementById('longitude');
+
+        // Jika sudah ada data koordinat (misal setelah error validasi)
+        if (latInput.value && lngInput.value) {
+            const lat = parseFloat(latInput.value);
+            const lng = parseFloat(lngInput.value);
+
+            marker = L.marker([lat, lng]).addTo(map);
+            map.setView([lat, lng], 16);
+
+            document.getElementById('location-info').classList.remove('hidden');
+            document.getElementById('koordinat-terpilih').innerText = `Koordinat: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+
+            fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('address-display').innerText = data.display_name || "Lokasi tidak ditemukan";
+                })
+                .catch(() => {
+                    document.getElementById('address-display').innerText = "Alamat tidak tersedia";
+                });
+        }
+
+        // Event klik peta
+        map.on('click', function (e) {
+            if (marker) map.removeLayer(marker);
+            marker = L.marker(e.latlng).addTo(map);
+
+            const lat = e.latlng.lat.toFixed(6);
+            const lng = e.latlng.lng.toFixed(6);
+
+            latInput.value = lat;
+            lngInput.value = lng;
+            document.getElementById('titik_koordinat').value = `${lat}, ${lng}`;
+
+            document.getElementById('location-info').classList.remove('hidden');
+            document.getElementById('koordinat-terpilih').innerText = `Koordinat: ${lat}, ${lng}`;
+
+            fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('address-display').innerText = data.display_name || "Lokasi tidak ditemukan";
+                })
+                .catch(() => {
+                    document.getElementById('address-display').innerText = "Alamat tidak tersedia";
+                });
+        });
+
         setTimeout(() => {
             map.invalidateSize();
-        }, 200);
-    });
+        }, 300);
 
-    const dropzone = document.getElementById('dropzone');
-    const fileInput = document.getElementById('foto');
-    const previewContainer = document.getElementById('preview-container');
-    const preview = document.getElementById('previewFoto');
-    const removeButton = document.getElementById('remove-photo');
+        // Dropzone: Pratinjau Gambar
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('foto');
+        const previewContainer = document.getElementById('preview-container');
+        const preview = document.getElementById('previewFoto');
+        const removeButton = document.getElementById('remove-photo');
 
-    dropzone.addEventListener('click', () => fileInput.click());
+        if (dropzone && fileInput) {
+            dropzone.addEventListener('click', () => fileInput.click());
 
-    fileInput.addEventListener('change', function () {
-        const file = this.files[0];
-        if (file && file.size <= 5 * 1024 * 1024) {
-            const reader = new FileReader();
-            reader.onload = e => {
-                preview.src = e.target.result;
-                previewContainer.classList.remove('hidden');
-                dropzone.classList.add('hidden');
-            };
-            reader.readAsDataURL(file);
-        } else {
-            alert('Ukuran file terlalu besar. Maksimal 5MB.');
+            fileInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file && file.size <= 5 * 1024 * 1024) {
+                    const reader = new FileReader();
+                    reader.onload = e => {
+                        preview.src = e.target.result;
+                        previewContainer.classList.remove('hidden');
+                        dropzone.classList.add('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    alert('Ukuran file terlalu besar. Maksimal 5MB.');
+                }
+            });
+
+            // Drag & drop handling
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => dropzone.classList.add('border-primary-500'), false);
+            });
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => dropzone.classList.remove('border-primary-500'), false);
+            });
+
+            dropzone.addEventListener('drop', e => {
+                e.preventDefault();
+                e.stopPropagation();
+                fileInput.files = e.dataTransfer.files;
+                fileInput.dispatchEvent(new Event('change'));
+            });
+
+            removeButton?.addEventListener('click', () => {
+                fileInput.value = '';
+                preview.src = '#';
+                previewContainer.classList.add('hidden');
+                dropzone.classList.remove('hidden');
+            });
         }
-    });
 
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        dropzone.addEventListener(eventName, e => {
-            e.preventDefault();
-            e.stopPropagation();
-        }, false);
-    });
-
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropzone.classList.add('active');
-    });
-
-    ['dragleave', 'drop'].forEach(eventName => {
-        dropzone.classList.remove('active');
-    });
-
-    dropzone.addEventListener('drop', e => {
-        fileInput.files = e.dataTransfer.files;
-        fileInput.dispatchEvent(new Event('change'));
-    });
-
-    removeButton.addEventListener('click', () => {
-        fileInput.value = '';
-        preview.src = '#';
-        previewContainer.classList.add('hidden');
-        dropzone.classList.remove('hidden');
-    });
-
-    document.getElementById('mobile-menu-button')?.addEventListener('click', () => {
-        document.getElementById('mobile-menu')?.classList.toggle('hidden');
+        // Mobile menu toggle (optional)
+        document.getElementById('mobile-menu-button')?.addEventListener('click', () => {
+            document.getElementById('mobile-menu')?.classList.toggle('hidden');
+        });
     });
 </script>
+
 
 <script>
     fetch('/api/pengaduan-maps')
